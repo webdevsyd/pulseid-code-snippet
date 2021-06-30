@@ -10,12 +10,12 @@
   <% for (key in htmlWebpackPlugin.files.css) { %>
     <link rel="stylesheet" data-aid="css-link" href="<%= htmlWebpackPlugin.files.css[key] %>">
   <% } %>
+  <script data-aid="js-script"></script>
 </head>
 <body>
   <div id="app"></div>
   <% for (key in htmlWebpackPlugin.files.js) { %>
     <script data-aid="js-link" type="text/javascript" src="<%= htmlWebpackPlugin.files.js[key] %>"></script>
   <% } %>
-  <script data-aid="js-script"></script>
 </body>
 </html>
