@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const LIMIT = 4;
 
-const PROXY_API_BASE = window.PROXY_API_BASE || process.env.PROXY_API_BASE;
+const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : process.env.PROXY_API_BASE;
 
 export const getOffers = async ({ page, xApiKey, xApiSecret } = {}) => {
   const response = await fetch(

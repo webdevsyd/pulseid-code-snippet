@@ -36,7 +36,7 @@ const decorateFavicon = document => {
 
 const addEnvVars = ({ document, apiKey, apiSecret, euid }) => {
   document.querySelector('[data-aid="js-script"]').textContent = [
-    `window.PROXY_API_BASE='${config.get('urls.host')}';`,
+    `window.PROXY_API_BASE='${config.get('urls.host')}'; `,
     `CodeSnippet.config({
       xApiKey: '${apiKey}',
       xApiSecret: '${apiSecret}',
