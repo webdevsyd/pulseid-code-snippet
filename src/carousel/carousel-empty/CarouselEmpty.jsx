@@ -9,7 +9,7 @@ const CarouselEmpty = () => {
   const { onFetchOffers, onResetOffers } = useOffers();
   return (
     <div className={classes.container}>
-      <h1 className={classes.title}>Offer Carousel Isn&lsquo;t Available Right Now</h1>
+      <h1 className={classes.title}>Offer Carousel Isn&lsquo;t Available Right Nows</h1>
       <p className={classes.description}>
         This is may be because of a technical error that we’re working to get fixed. Try reloading
         this page.
