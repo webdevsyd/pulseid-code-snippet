@@ -12,7 +12,6 @@ node_modules
 .nyc_output
 .vscode
 coverage
-dist
 
 # files
 yarn-error.log

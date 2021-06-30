@@ -8,7 +8,6 @@
     "start:dev-server": "run.env -p ./server/.env-local nodemon ./server/boot.js",
     "start:full-dev": "concurrently --kill-others-on-fail \"npm run start:frontend\"  \"npm run start:dev-server\"",
     "start": "node ./server/boot.js",
-    "postinstall": "npm run build",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
     "predeploy": "npm run copy-statics",
     "copy-statics": "mkdir statics && cp ./dist/* ./statics && rm ./statics/*.map"

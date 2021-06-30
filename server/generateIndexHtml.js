@@ -8,7 +8,7 @@ const artifactName = name.replace('@pulse/', '');
 const cdnUrl = config.get('urls.cdn');
 const release = config.get('releaseBranch');
 // const staticsUrl = `${cdnUrl}/artifacts/${artifactName}/${release}/${version}/`;
-const staticsUrl = 'https://cdn.jsdelivr.net/gh/webdevsyd/code-snippet/'
+const staticsUrl = 'https://cdn.jsdelivr.net/gh/webdevsyd/pulseid-code-snippet'
 
 const { parse } = require('node-html-parser');
 
