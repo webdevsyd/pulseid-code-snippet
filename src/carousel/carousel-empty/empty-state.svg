@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="322" height="92" viewBox="0 0 322 92">
+    <defs>
+        <rect id="uzkxm0siha" width="58" height="72" x="0" y="0" rx="3.2"/>
+        <rect id="6zz93yrxic" width="58" height="72" x="0" y="0" rx="3.2"/>
+        <rect id="ix1qviolme" width="58" height="72" x="0" y="0" rx="3.2"/>
+        <rect id="sbtsylrwrg" width="58" height="72" x="0" y="0" rx="3.2"/>
+        <rect id="vlm9jevh4i" width="58" height="72" x="0" y="0" rx="3.2"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" opacity=".6">
+        <g>
+            <g>
+                <g>
+                    <g transform="translate(-27 -647) translate(19 528) translate(8 119) translate(0 20)">
+                        <g>
+                            <mask id="05qhvpkhub" fill="#fff">
+                                <use xlink:href="#uzkxm0siha"/>
+                            </mask>
+                            <use fill="#FFF" xlink:href="#uzkxm0siha"/>
+                            <rect width="58" height="72" fill="#FFF" mask="url(#05qhvpkhub)" rx=".8"/>
+                            <g mask="url(#05qhvpkhub)" opacity=".148">
+                                <g transform="translate(12.712 4)">
+                                    <rect width="32" height="8" fill="#000" rx="4"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g transform="translate(17.722 35.2)">
+                            <g stroke="#DCDCDC" stroke-width=".8">
+                                <ellipse cx="11.278" cy="11.2" rx="11.678" ry="11.6"/>
+                            </g>
+                            <ellipse cx="11.278" cy="11.2" fill="#DCDCDC" fill-rule="nonzero" rx="10.472" ry="10.4"/>
+                        </g>
+                        <rect width="18" height="4" x="20" y="62" fill="#D8D8D8" rx="2"/>
+                    </g>
+                    <g transform="translate(-27 -647) translate(19 528) translate(8 119) translate(66 10)">
+                        <g>
+                            <mask id="doboib5fwd" fill="#fff">
+                                <use xlink:href="#6zz93yrxic"/>
+                            </mask>
+                            <use fill="#FFF" xlink:href="#6zz93yrxic"/>
+                            <rect width="58" height="72" fill="#FFF" mask="url(#doboib5fwd)" rx=".8"/>
+                            <g mask="url(#doboib5fwd)" opacity=".148">
+                                <g transform="translate(12.712 4)">
+                                    <rect width="32" height="8" fill="#000" rx="4"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g transform="translate(17.722 35.2)">
+                            <g stroke="#DCDCDC" stroke-width=".8">
+                                <ellipse cx="11.278" cy="11.2" rx="11.678" ry="11.6"/>
+                            </g>
+                            <ellipse cx="11.278" cy="11.2" fill="#DCDCDC" fill-rule="nonzero" rx="10.472" ry="10.4"/>
+                        </g>
+                        <rect width="18" height="4" x="20" y="62" fill="#D8D8D8" rx="2"/>
+                    </g>
+                    <g transform="translate(-27 -647) translate(19 528) translate(8 119) translate(264 20)">
+                        <g>
+                            <mask id="fs4lkem3ff" fill="#fff">
+                                <use xlink:href="#ix1qviolme"/>
+                            </mask>
+                            <use fill="#FFF" xlink:href="#ix1qviolme"/>
+                            <rect width="58" height="72" fill="#FFF" mask="url(#fs4lkem3ff)" rx=".8"/>
+                            <g mask="url(#fs4lkem3ff)" opacity=".148">
+                                <g transform="translate(12.712 4)">
+                                    <rect width="32" height="8" fill="#000" rx="4"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g transform="translate(17.722 35.2)">
+                            <g stroke="#DCDCDC" stroke-width=".8">
+                                <ellipse cx="11.278" cy="11.2" rx="11.678" ry="11.6"/>
+                            </g>
+                            <ellipse cx="11.278" cy="11.2" fill="#DCDCDC" fill-rule="nonzero" rx="10.472" ry="10.4"/>
+                        </g>
+                        <rect width="18" height="4" x="20" y="62" fill="#D8D8D8" rx="2"/>
+                    </g>
+                    <g transform="translate(-27 -647) translate(19 528) translate(8 119) translate(198 10)">
+                        <g>
+                            <mask id="evncxp5bsh" fill="#fff">
+                                <use xlink:href="#sbtsylrwrg"/>
+                            </mask>
+                            <use fill="#FFF" xlink:href="#sbtsylrwrg"/>
+                            <rect width="58" height="72" fill="#FFF" mask="url(#evncxp5bsh)" rx=".8"/>
+                            <g mask="url(#evncxp5bsh)" opacity=".148">
+                                <g transform="translate(12.712 4)">
+                                    <rect width="32" height="8" fill="#000" rx="4"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g transform="translate(17.722 35.2)">
+                            <g stroke="#DCDCDC" stroke-width=".8">
+                                <ellipse cx="11.278" cy="11.2" rx="11.678" ry="11.6"/>
+                            </g>
+                            <ellipse cx="11.278" cy="11.2" fill="#DCDCDC" fill-rule="nonzero" rx="10.472" ry="10.4"/>
+                        </g>
+                        <rect width="18" height="4" x="20" y="62" fill="#D8D8D8" rx="2"/>
+                    </g>
+                    <g transform="translate(-27 -647) translate(19 528) translate(8 119) translate(132)">
+                        <g>
+                            <mask id="wwmr35zwkj" fill="#fff">
+                                <use xlink:href="#vlm9jevh4i"/>
+                            </mask>
+                            <use fill="#FFF" xlink:href="#vlm9jevh4i"/>
+                            <rect width="58" height="72" fill="#FFF" mask="url(#wwmr35zwkj)" rx=".8"/>
+                            <g mask="url(#wwmr35zwkj)" opacity=".148">
+                                <g transform="translate(12.712 4)">
+                                    <rect width="32" height="8" fill="#000" rx="4"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g transform="translate(17.722 35.2)">
+                            <g stroke="#DCDCDC" stroke-width=".8">
+                                <ellipse cx="11.278" cy="11.2" rx="11.678" ry="11.6"/>
+                            </g>
+                            <ellipse cx="11.278" cy="11.2" fill="#DCDCDC" fill-rule="nonzero" rx="10.472" ry="10.4"/>
+                        </g>
+                        <rect width="18" height="4" x="20" y="62" fill="#D8D8D8" rx="2"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

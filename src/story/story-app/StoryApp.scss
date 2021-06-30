@@ -1,0 +1,16 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  z-index: 2;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000 100%);
+  transition: all 0.2s;
+}
+
+.mediaWrapper {
+  width: 100%;
+  height: 70%;
+  @media (max-width: 320px) {
+    height: 60%;
+  }
+}

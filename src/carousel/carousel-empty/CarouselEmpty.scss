@@ -1,0 +1,46 @@
+.container {
+  height: 180px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 28px;
+  text-align: center;
+  background-color: #f2f3f4;
+  overflow: hidden;
+  position: relative;
+}
+
+.title {
+  color: #000000;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.description {
+  color: rgba(60, 60, 67, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+  margin: 5px 0 0 0;
+}
+
+.tryAgainButton {
+  border: 1px solid #3c3c43;
+  color: #000000;
+  outline: none;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  margin-top: 10px;
+  font-size: 14px;
+  &:hover {
+    background-color: #ff9800;
+    border: 1px solid #ff9800;
+    color: #ffffff;
+  }
+}
+
+.emptyState {
+  position: absolute;
+  left: 50%;
+  bottom: -31px;
+  transform: translateX(-50%);
+}

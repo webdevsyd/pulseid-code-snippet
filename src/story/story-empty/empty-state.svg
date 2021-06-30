@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="240" viewBox="0 0 330 240">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g transform="translate(-23.000000, -133.000000) translate(23.000000, 133.000000) translate(106.000000, 0.000000)">
+                    <rect width="118" height="240" fill="#F9FAFA" rx="4.8"/>
+                    <rect width="102.896" height="102.188" x="7.552" y="39.688" fill="#E4E5E5" rx="3.125"/>
+                    <rect width="26.49" height="7.2" x="7.552" y="166.262" fill="#E4E5E5" rx="3.6"/>
+                    <rect width="85.49" height="4.8" x="7.552" y="178.262" fill="#E4E5E5" rx="2.4"/>
+                    <rect width="39.735" height="4.8" x="7.552" y="189.063" fill="#E4E5E5" rx="2.4"/>
+                    <rect width="14.449" height="4.8" x="7.552" y="199.863" fill="#E4E5E5" rx="2.4"/>
+                    <g transform="translate(7.552000, 2.500000)">
+                        <rect width="33.667" height="1.2" x="69.228" fill="#E4E5E5" opacity=".3" rx=".6"/>
+                        <rect width="33.667" height="1.2" x="34.614" fill="#000" opacity=".1" rx=".6"/>
+                        <rect width="33.667" height="1.2" fill="#E4E5E5" opacity=".3" rx=".6"/>
+                    </g>
+                    <g>
+                        <g transform="translate(7.552000, 5.937500)">
+                            <g transform="translate(15.104000, 4.325000)">
+                                <rect width="19.265" height="3.6" x="1.204" fill="#E4E5E5" rx="1.8"/>
+                                <g>
+                                    <path d="M0 0H3.776V3.75H0z" transform="translate(0.000000, 3.175000)"/>
+                                </g>
+                            </g>
+                            <ellipse cx="6.185" cy="6.143" fill="#E4E5E5" fill-rule="nonzero" rx="6.185" ry="6.143"/>
+                        </g>
+                        <g opacity=".3">
+                            <g transform="translate(7.552000, 5.937500) translate(79.610667, 1.562500)">
+                                <ellipse cx="5.035" cy="5" fill="#000" rx="5.035" ry="5"/>
+                                <g fill="#FFF" transform="translate(2.832000, 4.375000)">
+                                    <circle cx=".629" cy=".625" r="1"/>
+                                    <circle cx="2.203" cy=".625" r="1"/>
+                                    <circle cx="3.776" cy=".625" r="1"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g opacity=".33" transform="translate(7.552000, 5.937500) translate(92.512000, 1.562500)">
+                            <ellipse cx="5.018" cy="5" fill="#000" opacity=".3" rx="5.018" ry="5"/>
+                            <text fill="#FFF" font-family="SFProDisplay-Semibold, SF Pro Display" font-size="6.25" font-weight="500">
+                                <tspan x="2.195" y="7.25">􀅾</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <rect width="102.347" height="16.8" x="7.552" y="213.063" fill="#E4E5E5" rx="8.4"/>
+                </g>
+                <g transform="translate(-23.000000, -133.000000) translate(23.000000, 133.000000) translate(232.000000, 20.000000)">
+                    <rect width="98" height="200" fill="#F9FAFA" rx="4"/>
+                    <rect width="85.456" height="85.156" x="6.272" y="33.073" fill="#E4E5E5" rx="2.604"/>
+                    <rect width="22" height="6" x="6.272" y="138.552" fill="#E4E5E5" rx="3"/>
+                    <rect width="71" height="4" x="6.272" y="148.552" fill="#E4E5E5" rx="2"/>
+                    <rect width="33" height="4" x="6.272" y="157.552" fill="#E4E5E5" rx="2"/>
+                    <rect width="12" height="4" x="6.272" y="166.552" fill="#E4E5E5" rx="2"/>
+                    <g transform="translate(6.272000, 2.083333)">
+                        <rect width="27.961" height="1" x="57.494" fill="#E4E5E5" opacity=".3" rx=".391"/>
+                        <rect width="27.961" height="1" x="28.747" fill="#000" opacity=".1" rx=".391"/>
+                        <rect width="27.961" height="1" fill="#E4E5E5" opacity=".3" rx=".391"/>
+                    </g>
+                    <g>
+                        <g transform="translate(6.272000, 4.947917)">
+                            <g transform="translate(12.544000, 3.604167)">
+                                <rect width="16" height="3" x="1" fill="#E4E5E5" rx="1.5"/>
+                                <g>
+                                    <path d="M0 0H3.136V3.125H0z" transform="translate(0.000000, 2.645833)"/>
+                                </g>
+                            </g>
+                            <ellipse cx="5.137" cy="5.119" fill="#E4E5E5" fill-rule="nonzero" rx="5.137" ry="5.119"/>
+                        </g>
+                        <g opacity=".3">
+                            <g transform="translate(6.272000, 4.947917) translate(66.117333, 1.302083)">
+                                <ellipse cx="4.181" cy="4.167" fill="#000" rx="4.181" ry="4.167"/>
+                                <g fill="#FFF" transform="translate(2.352000, 3.645833)">
+                                    <circle cx=".523" cy=".521" r="1"/>
+                                    <circle cx="1.829" cy=".521" r="1"/>
+                                    <circle cx="3.136" cy=".521" r="1"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g opacity=".33" transform="translate(6.272000, 4.947917) translate(77.093333, 1.302083)">
+                            <ellipse cx="4.181" cy="4.167" fill="#000" opacity=".3" rx="4.181" ry="4.167"/>
+                            <text fill="#FFF" font-family="SFProDisplay-Semibold, SF Pro Display" font-size="5.208" font-weight="500">
+                                <tspan x="1.829" y="6.042">􀅾</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <rect width="85" height="14" x="6.272" y="177.552" fill="#E4E5E5" rx="7"/>
+                </g>
+                <g transform="translate(-23.000000, -133.000000) translate(23.000000, 133.000000) translate(0.000000, 20.000000)">
+                    <rect width="98" height="200" fill="#F9FAFA" rx="4"/>
+                    <rect width="85.456" height="85.156" x="6.272" y="33.073" fill="#E4E5E5" rx="2.604"/>
+                    <rect width="22" height="6" x="6.272" y="138.552" fill="#E4E5E5" rx="3"/>
+                    <rect width="71" height="4" x="6.272" y="148.552" fill="#E4E5E5" rx="2"/>
+                    <rect width="33" height="4" x="6.272" y="157.552" fill="#E4E5E5" rx="2"/>
+                    <rect width="12" height="4" x="6.272" y="166.552" fill="#E4E5E5" rx="2"/>
+                    <g transform="translate(6.272000, 2.083333)">
+                        <rect width="27.961" height="1" x="57.494" fill="#E4E5E5" opacity=".3" rx=".5"/>
+                        <rect width="27.961" height="1" x="28.747" fill="#000" opacity=".1" rx=".5"/>
+                        <rect width="27.961" height="1" fill="#E4E5E5" opacity=".3" rx=".5"/>
+                    </g>
+                    <g>
+                        <g transform="translate(6.272000, 4.947917)">
+                            <g transform="translate(12.544000, 3.604167)">
+                                <rect width="16" height="3" x="1" fill="#E4E5E5" rx="1.5"/>
+                                <g>
+                                    <path d="M0 0H3.136V3.125H0z" transform="translate(0.000000, 2.645833)"/>
+                                </g>
+                            </g>
+                            <ellipse cx="5.137" cy="5.119" fill="#E4E5E5" fill-rule="nonzero" rx="5.137" ry="5.119"/>
+                        </g>
+                        <g opacity=".3">
+                            <g transform="translate(6.272000, 4.947917) translate(66.117333, 1.302083)">
+                                <ellipse cx="4.181" cy="4.167" fill="#000" rx="4.181" ry="4.167"/>
+                                <g fill="#FFF" transform="translate(2.352000, 3.645833)">
+                                    <circle cx=".523" cy=".521" r="1"/>
+                                    <circle cx="1.829" cy=".521" r="1"/>
+                                    <circle cx="3.136" cy=".521" r="1"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g opacity=".33" transform="translate(6.272000, 4.947917) translate(77.093333, 1.302083)">
+                            <ellipse cx="4.181" cy="4.167" fill="#000" opacity=".3" rx="4.181" ry="4.167"/>
+                            <text fill="#FFF" font-family="SFProDisplay-Semibold, SF Pro Display" font-size="5.208" font-weight="500">
+                                <tspan x="1.829" y="6.042">􀅾</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <rect width="85" height="14" x="6.272" y="177.552" fill="#E4E5E5" rx="7"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

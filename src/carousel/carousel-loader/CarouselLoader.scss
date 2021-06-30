@@ -1,0 +1,85 @@
+@keyframes placeHolderShimmer{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
+  }
+}
+
+.animated-background {
+  animation-duration: 1.75s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #dedede;
+  background: linear-gradient(to right, #dedede 8%, #f1f1f1 18%, #dedede 33%);
+  background-size: 800px 104px;
+  height: 96px;
+  position: relative;
+}
+
+.wrapper {
+  width: 144px;
+  height: 160px;
+  border-radius: 12px;
+  margin-right: 8px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 8px -4px rgba(0, 0, 0, 0.32);
+  background-color: #ffffff;
+}
+
+
+.title {
+  background-color: #dedede;
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+  width: 70%;
+  height: 24px;
+  @extend .animated-background;
+}
+
+.info {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.imageContainer {
+  width: 61px;
+  height: 61px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background-color: #dedede;
+  @extend .animated-background;
+  padding: 2px;
+}
+
+.image {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.company {
+  @extend .animated-background;
+  background-color: #dedede;
+  width: 80%;
+  height: 10px;
+  border-radius: 10px;
+}

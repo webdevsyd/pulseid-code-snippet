@@ -1,0 +1,24 @@
+#Intelij
+.idea/
+*.iws
+/out/
+.idea_modules/
+
+# hidden files
+.DS_Store
+
+# paths
+node_modules
+.nyc_output
+.vscode
+coverage
+dist
+
+# files
+yarn-error.log
+lerna-debug.log
+
+# npm
+**/package-lock.json
+**/.eslintcache
+**/.npmrc

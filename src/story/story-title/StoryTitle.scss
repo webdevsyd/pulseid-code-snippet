@@ -1,0 +1,103 @@
+.wrapper {
+  width: 100%;
+  height: 30%;
+  box-sizing: border-box;
+  padding: 25px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  @media (max-width: 320px) {
+    height: 40%;
+  }
+}
+
+.title {
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  @media (max-width: 320px) {
+    -webkit-line-clamp: 1;
+    font-size: 18px;
+  }
+}
+
+.enrollButton {
+  background-color: #ff9800;
+  width: 100%;
+  padding: 15px 20px;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  border-radius: 30px;
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+}
+
+.enrollButton:disabled {
+  background-color: #2E2E2E;
+  cursor: not-allowed;
+}
+
+.enrollIcon { 
+  margin-right: 10px;
+}
+
+.otherDetailsWrapper {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dateWrapper {
+ display: flex;
+ margin-right: 20px;
+}
+
+.date {
+  color: #ffffff;
+  opacity: 0.6;
+  font-size: 15px;
+}
+
+.conditionWrapper {
+  display: flex;
+}
+
+.condition {
+  color: #ffffff;
+  opacity: 0.6;
+  font-size: 15px;
+}
+
+.icon {
+  color: #ffffff;
+  opacity: 0.6;
+  margin-right: 7px;
+  margin-top: 1px;
+}
+
+.loadingSpinner {
+	pointer-events: none;
+	width: 25px;
+	height: 25px;
+	border: 4px solid transparent;
+	border-color: #000000;
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+	100% {
+    transform: rotate(360deg);
+	}
+}

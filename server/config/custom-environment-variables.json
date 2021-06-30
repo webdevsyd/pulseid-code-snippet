@@ -1,0 +1,7 @@
+{
+  "urls": {
+    "externalOfferApi": "EXTERNAL_OFFER_API_BASE",
+    "cdn": "GLOBAL_CDN_URL"
+  },
+  "releaseBranch": "RELEASE_BRANCH"
+}

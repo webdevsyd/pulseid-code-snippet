@@ -1,0 +1,84 @@
+html, body {
+  /* default browser is 8px, so reset to 0. */
+  margin: 0;
+  font-family: 'SF Pro Display';
+  color: #091e42;
+  background-color: #161616;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+}
+
+ul, ol, li {
+  padding: 0 0;
+  margin: 0 0;
+  display: grid;
+}
+
+hr {
+  border: 0.5px solid #eff2f7;
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; line-height: normal; font-weight: 400; }
+h1 { font-weight: 400; }
+h2 { font-weight: 400; }
+h3 { font-weight: 600; }
+h4 { font-weight: 700; }
+h5 { font-weight: 700; }
+h6 { font-weight: 400;}
+h6 span { font-weight: 600; }
+
+textarea,
+input {
+  font-family: 'SF Pro Display';
+}
+
+/* Chrome, Firefox, Opera, Safari 10.1+ */
+textarea::placeholder,
+input::placeholder {
+  opacity: 1; /* Firefox */
+  color: #c0ccda;
+
+  /*
+    Note:
+    '::placeholder' has default font style,
+    so we have to overwrite it again.
+  */
+  font-family: 'SF Pro Display';
+  font-weight: 300;
+}
+
+button {
+  /*
+    Note:
+    <input type="button"> has a default CSS value
+    of font="400 11px system-ui", so we have to
+    explicitly overwrite some attributes here.
+  */
+  font-family: 'SF Pro Display';
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none; /* Remove ugly default outline */
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.visibility-hidden {
+  /* Use this to hide an element, but retain width/height */
+  visibility: hidden;
+}
+
+.display-none {
+  /* Use this to completely hide the element, including width/height */
+  display: none;
+}
+
+.opacity-zero {
+  /* Similar result as visibility-none, but you can animate this with "transition" */
+  opacity: 0;
+}

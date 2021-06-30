@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  src: local('SF Pro Text Regular'), local('SF-Pro-Text-Regular'), url('./SF-Pro-Text-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 400;
+  src: local('SF Pro Display Regular'), local('SF-Pro-Display-Regular'), url('./SF-Pro-Display-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 500;
+  src: local('SF Pro Display Medium'), local('SF-Pro-Display-Medium'), url('./SF-Pro-Display-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 600;
+  src: local('SF Pro Display SemiBold'), local('SF-Pro-Display-SemiBold'), url('./SF-Pro-Display-Semibold.woff2') format('woff2');
+}
