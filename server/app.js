@@ -12,6 +12,14 @@ const {
 const offerRouter = require('./routers/offer');
 const generateIndexHTML = require('./generateIndexHtml');
 
+const ignoreFavicon = (req, res, next) => {
+  if (req.originalUrl && req.originalUrl.split('/').pop() === 'favicon.ico') {
+    res.sendStatus(204);
+  }
+
+  next();
+};
+
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -22,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(cors({ credentials: true, origin: 'https://pulse-code-snippet.herokuapp.com' }));
 }
 
+app.use(ignoreFavicon);
 app.use(traceIdMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
