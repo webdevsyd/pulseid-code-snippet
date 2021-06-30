@@ -34,9 +34,14 @@ const decorateFavicon = document => {
   document.querySelector('[data-aid="favicon-link"]').setAttribute('href', staticsUrl + href);
 };
 
-const addEnvVars = ({ document, apiKey, apiSecret, euid }) => {
+const addEnvVars = document => {
   document.querySelector('[data-aid="js-script"]').textContent = [
-    `window.PROXY_API_BASE='${config.get('urls.host')}'; `,
+    `window.PROXY_API_BASE='${config.get('urls.host')}';`,
+  ].join('');
+};
+
+const initializeApp = ({ document, apiKey, apiSecret, euid }) => {
+  document.querySelector('[data-aid="js-app"]').textContent = [
     `CodeSnippet.config({
       xApiKey: '${apiKey}',
       xApiSecret: '${apiSecret}',
@@ -52,7 +57,8 @@ const generateIndexHTML = ({ apiKey = 'apiKey', apiSecret = 'apiSecret', euid = 
   const html = fs.readFileSync(indexPath, 'utf-8');
   const document = parse(html);
 
-  addEnvVars({ document, apiKey, apiSecret, euid });
+  addEnvVars(document);
+  initializeApp({ document, apiKey, apiSecret, euid });
   decorateJsLinks(document);
   decorateCssLinks(document);
   decorateFavicon(document);
