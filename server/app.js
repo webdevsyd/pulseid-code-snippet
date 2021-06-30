@@ -36,7 +36,7 @@ app.get('*', (req, res) => {
 
   if (req.originalUrl.includes('story.html')) {
     page = 'story';
-  } else if (req.originalUrl.includes('carouse.html')) {
+  } else if (req.originalUrl.includes('carousel.html')) {
     page = 'carousel';
   }
 
