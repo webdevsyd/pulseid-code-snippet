@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <% if (htmlWebpackPlugin.files.favicon) { %>
+    <link rel="shortcut icon" data-aid="favicon-link" href="<%= htmlWebpackPlugin.files.favicon%>">
+    <% } %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <% for (key in htmlWebpackPlugin.files.css) { %>

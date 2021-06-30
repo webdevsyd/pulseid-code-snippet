@@ -28,6 +28,12 @@ const decorateCssLinks = document => {
   });
 };
 
+const decorateFavicon = document => {
+  const href = document.querySelector('[data-aid="favicon-link"]').getAttribute('href');
+
+  document.querySelector('[data-aid="favicon-link"]').setAttribute('href', staticsUrl + href);
+};
+
 const addEnvVars = ({ document, apiKey, apiSecret, euid }) => {
   document.querySelector('[data-aid="js-script"]').textContent = [
     `CodeSnippet.config({
@@ -48,6 +54,7 @@ const generateIndexHTML = ({ apiKey = 'apiKey', apiSecret = 'apiSecret', euid = 
   addEnvVars({ document, apiKey, apiSecret, euid });
   decorateJsLinks(document);
   decorateCssLinks(document);
+  decorateFavicon(document);
 
   return document.toString();
 };
