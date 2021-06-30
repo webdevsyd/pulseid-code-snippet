@@ -1,6 +1,6 @@
 {
   "urls": {
-    "host": "PROXY_API_BASE",
+    "host": "HOST_URL",
     "externalOfferApi": "EXTERNAL_OFFER_API_BASE",
     "cdn": "GLOBAL_CDN_URL"
   },

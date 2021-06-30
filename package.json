@@ -14,11 +14,6 @@
   },
   "author": "Sydney Loteria",
   "license": "UNLICENSED",
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:3006"
-    }
-  },
   "devDependencies": {
     "@pulse/react-babel-config": "^1.792.0",
     "@pulse/react-test": "^1.1011.0",
