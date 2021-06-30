@@ -1,20 +1,22 @@
 /* eslint-disable no-param-reassign */
 const path = require('path');
 const fs = require('fs');
+
 const config = require('config');
+const { parse } = require('node-html-parser');
 
 const { version, name } = require('../package.json');
+
 const artifactName = name.replace('@pulse/', '');
 const cdnUrl = config.get('urls.cdn');
 const release = config.get('releaseBranch');
-// const staticsUrl = `${cdnUrl}/artifacts/${artifactName}/${release}/${version}/`;
-const staticsUrl = 'https://cdn.jsdelivr.net/gh/webdevsyd/pulseid-code-snippet'
 
-const { parse } = require('node-html-parser');
+// const staticsUrl = `${cdnUrl}/artifacts/${artifactName}/${release}/${version}/`;
+const staticsUrl = 'https://cdn.jsdelivr.net/gh/webdevsyd/pulseid-code-snippet/dist';
 
 const decorateJsLinks = document => {
   Array.from(document.querySelectorAll('[data-aid="js-link"]')).forEach(a => {
-    const src = a.getAttribute('src');1
+    const src = a.getAttribute('src');
     a.setAttribute('src', staticsUrl + src);
   });
 };
@@ -34,17 +36,11 @@ const addEnvVars = ({ document, apiKey, apiSecret, euid, page }) => {
       euid: '${euid}',
       selector: '#app',
     }); `,
-    `CodeSnippet.${page}.render();`
+    `CodeSnippet.${page}.render();`,
   ].join('');
 };
 
-const generateIndexHTML = ({
-  apiKey = 'apiKey',
-  apiSecret = 'apiSecret',
-  euid = 'euid',
-  page,
-}) => {
-  console.log(page);
+const generateIndexHTML = ({ apiKey = 'apiKey', apiSecret = 'apiSecret', euid = 'euid', page }) => {
   const indexPath = path.resolve(`./dist/${page}.html`);
   const html = fs.readFileSync(indexPath, 'utf-8');
   const document = parse(html);
