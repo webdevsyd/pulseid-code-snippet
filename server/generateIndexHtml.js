@@ -5,6 +5,8 @@ const fs = require('fs');
 const config = require('config');
 const { parse } = require('node-html-parser');
 
+const host = config.get('urls.host');
+
 // const { version, name } = require('../package.json');
 
 // const artifactName = name.replace('@pulse/', '');
@@ -12,7 +14,7 @@ const { parse } = require('node-html-parser');
 // const release = config.get('releaseBranch');
 
 // const staticsUrl = `${cdnUrl}/artifacts/${artifactName}/${release}/${version}/`;
-const staticsUrl = 'https://pulse-code-snippet.herokuapp.com';
+const staticsUrl = host;
 
 const decorateJsLinks = document => {
   Array.from(document.querySelectorAll('[data-aid="js-link"]')).forEach(a => {
@@ -36,7 +38,7 @@ const decorateFavicon = document => {
 
 const addEnvVars = document => {
   document.querySelector('[data-aid="js-script"]').textContent = [
-    `window.PROXY_API_BASE='${config.get('urls.host')}';`,
+    `window.PROXY_API_BASE='${host}';`,
   ].join('');
 };
 
