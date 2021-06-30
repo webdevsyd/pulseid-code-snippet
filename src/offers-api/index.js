@@ -5,6 +5,8 @@ const LIMIT = 4;
 
 const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : 'http://localhost:3006';
 
+console.log('PROXY_API_BASE', PROXY_API_BASE);
+
 export const getOffers = async ({ page, xApiKey, xApiSecret } = {}) => {
   const response = await fetch(
     `${PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page })}`,
