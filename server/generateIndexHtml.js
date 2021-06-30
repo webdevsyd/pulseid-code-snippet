@@ -12,19 +12,19 @@ const { parse } = require('node-html-parser');
 // const release = config.get('releaseBranch');
 
 // const staticsUrl = `${cdnUrl}/artifacts/${artifactName}/${release}/${version}/`;
-const staticsUrl = 'https://cdn.jsdelivr.net/gh/webdevsyd/pulseid-code-snippet/dist';
+const staticsUrl = 'https://pulse-code-snippet.herokuapp.com';
 
 const decorateJsLinks = document => {
   Array.from(document.querySelectorAll('[data-aid="js-link"]')).forEach(a => {
     const src = a.getAttribute('src');
-    a.setAttribute('src', staticsUrl + src);
+    a.setAttribute('href', `${staticsUrl}/js${src}`);
   });
 };
 
 const decorateCssLinks = document => {
   Array.from(document.querySelectorAll('[data-aid="css-link"]')).forEach(a => {
     const href = a.getAttribute('href');
-    a.setAttribute('href', staticsUrl + href);
+    a.setAttribute('href', `${staticsUrl}/css${href}`);
   });
 };
 

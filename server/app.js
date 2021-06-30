@@ -1,5 +1,7 @@
 process.env.NODE_CONFIG_DIR = `${__dirname}/config/`;
 
+const path = require('path');
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -31,7 +33,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/offer', offerRouter);
 
-console.log('PORT', process.env.PORT);
+app.get('/js/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/', req.params.file));
+});
+
+app.get('/css/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/', req.params.file));
+});
 
 app.get('*', (req, res) => {
   const apiKey = req.headers['x-api-key'] || process.env.API_KEY;
