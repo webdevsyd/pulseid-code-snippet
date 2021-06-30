@@ -18,6 +18,10 @@ if (process.env.NODE_ENV === 'development') {
   app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
 }
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(cors({ credentials: true, origin: 'https://pulse-code-snippet.herokuapp.com' }));
+}
+
 app.use(traceIdMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
