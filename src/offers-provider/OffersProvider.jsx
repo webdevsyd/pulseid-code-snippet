@@ -22,6 +22,7 @@ const OffersProvider = props => {
   const [pageNumber, setPageNumber] = useState(0);
 
   const fetchOffers = async ({ page = pageNumber } = {}) => {
+    console.log('fetch offers');
     if (total === offers.length && offers.length > 0) return;
 
     try {
@@ -38,6 +39,7 @@ const OffersProvider = props => {
       setTotal(body.totalCount);
       setPageNumber(page);
     } catch (e) {
+      console.log(e);
       setHasErrorOffers(true);
     } finally {
       setIsFetchingOffers(false);
