@@ -21,4 +21,3 @@ lerna-debug.log
 # npm
 **/package-lock.json
 **/.eslintcache
-**/.npmrc
