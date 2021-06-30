@@ -17,6 +17,7 @@ const CarouselEmpty = () => {
       <button
         type="button"
         onClick={() => {
+          console.log('ON CLICK TRY AGAIN');
           onResetOffers();
           onFetchOffers({ page: 0 });
         }}
