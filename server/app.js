@@ -53,9 +53,13 @@ app.get(/.*woff2$/, (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', req.originalUrl));
 });
 
-app.get(/.*png$/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist', req.originalUrl));
+app.get('/*.png', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', req.originalUrl.split('?')[0]));
 });
+
+// app.get(/.*png?random=*$/, (req, res) => {
+//   res.sendFile(path.join(__dirname, '../dist', req.originalUrl));
+// });
 
 app.get('*', (req, res) => {
   const apiKey = req.headers['x-api-key'] || process.env.API_KEY;
