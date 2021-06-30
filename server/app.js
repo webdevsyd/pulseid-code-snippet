@@ -41,6 +41,18 @@ app.get('/css/:file', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/', req.params.file));
 });
 
+app.get('/js/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/', req.params.file));
+});
+
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/favicon.ico'));
+});
+
+app.get(/.*woff2$/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', req.originalUrl));
+});
+
 app.get('*', (req, res) => {
   const apiKey = req.headers['x-api-key'] || process.env.API_KEY;
   const apiSecret = req.headers['x-api-secret'] || process.env.API_SECRET;
