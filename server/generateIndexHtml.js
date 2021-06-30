@@ -2,7 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 
-// const config = require('config');
+const config = require('config');
 const { parse } = require('node-html-parser');
 
 // const { version, name } = require('../package.json');
@@ -36,6 +36,7 @@ const decorateFavicon = document => {
 
 const addEnvVars = ({ document, apiKey, apiSecret, euid }) => {
   document.querySelector('[data-aid="js-script"]').textContent = [
+    `window.PROXY_API_BASE='${config.get('urls.host')}';`,
     `CodeSnippet.config({
       xApiKey: '${apiKey}',
       xApiSecret: '${apiSecret}',

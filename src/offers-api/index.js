@@ -3,10 +3,11 @@ import axios from 'axios';
 
 const LIMIT = 4;
 
+const PROXY_API_BASE = window.PROXY_API_BASE || process.env.PROXY_API_BASE;
+
 export const getOffers = async ({ page, xApiKey, xApiSecret } = {}) => {
-  console.log(process.env.PROXY_API_BASE);
   const response = await fetch(
-    `${process.env.PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page })}`,
+    `${PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page })}`,
     {
       method: 'GET',
       headers: {
@@ -27,10 +28,8 @@ export const postOfferAttribution = async ({
   xApiKey,
   xApiSecret,
 }) => {
-  console.log(process.env.PROXY_API_BASE);
-
   await axios.post(
-    `${process.env.PROXY_API_BASE}/api/offer/activation`,
+    `${PROXY_API_BASE}/api/offer/activation`,
     { offerId, action, externalUserId: externalUserId.toString() },
     { headers: { 'X-Api-Key': xApiKey, 'X-Api-Secret': xApiSecret } }
   );
