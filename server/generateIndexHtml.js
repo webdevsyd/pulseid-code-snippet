@@ -17,7 +17,7 @@ const staticsUrl = 'https://pulse-code-snippet.herokuapp.com';
 const decorateJsLinks = document => {
   Array.from(document.querySelectorAll('[data-aid="js-link"]')).forEach(a => {
     const src = a.getAttribute('src');
-    a.setAttribute('href', `${staticsUrl}/js${src}`);
+    a.setAttribute('src', `${staticsUrl}/js${src}`);
   });
 };
 
