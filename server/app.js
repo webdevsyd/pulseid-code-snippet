@@ -25,10 +25,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/offer', offerRouter);
 
 app.get('*', (req, res) => {
-  const apiKey = req.headers['x-api-key'];
-  const apiSecret = req.headers['x-api-secret'];
+  const apiKey = req.headers['x-api-key'] || process.env.API_KEY;
+  const apiSecret = req.headers['x-api-secret'] || process.env.API_SECRET;
   const { euid } = req.headers;
   let page = '';
+
   if (req.originalUrl.includes('story.html')) {
     page = 'story';
   } else if (req.originalUrl.includes('carouse.html')) {
