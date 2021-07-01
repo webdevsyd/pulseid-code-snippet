@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import icons from '@pulse/ui-lib/src/components/icons';
 
 // eslint-disable-next-line import/no-unresolved
 import '../index.css?raw';
@@ -15,6 +16,8 @@ import App from './App';
 //   },
 // });
 
+icons.setup();
+
 let init = null;
 
 export default {
@@ -23,7 +26,10 @@ export default {
   },
   render: () => {
     // eslint-disable-next-line react/jsx-filename-extension
-    ReactDOM.render(<App xApiKey={init.xApiKey} xApiSecret={init.xApiSecret} externalUserId={init.euid} />, document.querySelector(init.selector));
+    ReactDOM.render(
+      <App xApiKey={init.xApiKey} xApiSecret={init.xApiSecret} externalUserId={init.euid} />,
+      document.querySelector(init.selector)
+    );
   },
   unmount() {
     ReactDOM.unmountComponentAtNode(document.querySelector(init.selector));
