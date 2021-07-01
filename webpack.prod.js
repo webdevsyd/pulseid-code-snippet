@@ -29,32 +29,56 @@ module.exports = {
   module: {
     rules: [
       {
+        // Refer: https://github.com/css-modules/css-modules/pull/65
+        // Refer: .eslintrc.js file ("import/no-unresolved" rule)
         test: /\.(scss|css)$/,
-        use: [
-          MiniCssExtractPluginLoader,
+        oneOf: [
           {
-            loader: require.resolve('css-loader'),
-            options: {
-              importLoaders: 1,
-              sourceMap: true,
-              modules: {
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+            // Loads CSS without any special processing. Reserved
+            // for third-party CSS (i.e. from node_modules)
+            resourceQuery: /^\?raw$/,
+            use: [
+              MiniCssExtractPluginLoader,
+              {
+                loader: require.resolve('css-loader'),
               },
-            },
+            ],
           },
           {
-            loader: require.resolve('sass-loader'),
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: () => [autoprefixer()],
+            // Loads each CSS as module with unique localIdentName,
+            // which prevents CSS pollution between app components.
+            use: [
+              {
+                ...MiniCssExtractPluginLoader,
+                options: {
+                  publicPath: './',
+                },
               },
-            },
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  sourceMap: true,
+                  modules: {
+                    localIdentName: '[name]__[local]__[hash:base64:5]',
+                  },
+                },
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    plugins: () => [autoprefixer()],
+                  },
+                },
+              },
+            ],
           },
         ],
       },
