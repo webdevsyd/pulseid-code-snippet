@@ -308,6 +308,7 @@ const StoryApp = () => {
 
   return (
     <Swiper
+      className={classes.swiperWrapper}
       ref={swiperRef}
       onSlideResetTransitionEnd={swiper => handleSlideResetTransitionEnd(swiper)}
       onSlidePrevTransitionEnd={handleSlidePrevTransitionEnd}

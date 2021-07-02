@@ -1,11 +1,9 @@
 import qs from 'query-string';
 import axios from 'axios';
 
-const LIMIT = 4;
+const LIMIT = 10;
 
 const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : 'http://localhost:3006';
-
-console.log('PROXY_API_BASE', PROXY_API_BASE);
 
 export const getOffers = async ({ page, xApiKey, xApiSecret } = {}) => {
   const response = await fetch(

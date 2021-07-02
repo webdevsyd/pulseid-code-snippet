@@ -8,13 +8,13 @@ import { useOffers } from '../../offers-provider';
 import classes from './CarouselLists.scss';
 
 const CarouselLists = () => {
-  const { offers, isLoading, onFetchOffers, pageNumber } = useOffers();
+  const { offers, isFetchingOffers, onFetchOffers, pageNumber } = useOffers();
   return (
     <HorizontalScroll
       className={classes.wrapper}
       offsetRight={100}
       onReachRight={() => {
-        if (!isLoading) {
+        if (!isFetchingOffers) {
           onFetchOffers({ page: pageNumber + 1 });
         }
       }}
@@ -22,7 +22,7 @@ const CarouselLists = () => {
       {offers.map(offer => (
         <CarouselCard key={offer.id} offer={offer} />
       ))}
-      {isLoading && offers.length > 0 && <CarouselLoader />}
+      {isFetchingOffers && offers.length > 0 && <CarouselLoader />}
     </HorizontalScroll>
   );
 };
