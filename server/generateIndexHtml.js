@@ -44,6 +44,7 @@ const addEnvVars = document => {
 
 const initializeApp = ({ document, apiKey, apiSecret, euid }) => {
   document.querySelector('[data-aid="js-app"]').textContent = [
+    `alert('${window.pulseConfig.backgroundColor}');`,
     `CodeSnippet.config({
       xApiKey: '${apiKey}',
       xApiSecret: '${apiSecret}',
