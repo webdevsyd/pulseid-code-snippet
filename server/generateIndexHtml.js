@@ -42,9 +42,10 @@ const addEnvVars = document => {
   ].join('');
 };
 
+// `alert(window.pulseConfig.backgroundColor); `,
+
 const initializeApp = ({ document, apiKey, apiSecret, euid }) => {
   document.querySelector('[data-aid="js-app"]').textContent = [
-    `alert(window.pulseConfig.backgroundColor); `,
     `CodeSnippet.config({
       xApiKey: '${apiKey}',
       xApiSecret: '${apiSecret}',
