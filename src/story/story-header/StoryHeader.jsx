@@ -21,7 +21,16 @@ const StoryHeader = ({ story, onSetOfferDetailsOpen }) => {
         >
           <Icon icon={['fas', 'ellipsis-h']} />
         </button>
-        <button className={classes.buttonWrapper} type="button">
+        <button
+          onClick={() => {
+            if (typeof PulseiD !== 'undefined') {
+              // eslint-disable-next-line no-undef
+              PulseiD.onCancel();
+            }
+          }}
+          className={classes.buttonWrapper}
+          type="button"
+        >
           <Icon icon={['fas', 'times']} />
         </button>
       </div>

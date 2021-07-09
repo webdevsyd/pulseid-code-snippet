@@ -31,12 +31,10 @@ const OffersProvider = props => {
       setIsFetchingOffers(true);
       const body = await getOffers({ xApiKey, xApiSecret, page });
 
-      if (body.offers.length > 0) {
-        if (excludedOfferId) {
-          listOffers = body.offers.filter(o => o.id !== excludedOfferId);
-        } else {
-          listOffers = body.offers;
-        }
+      if (body.offers.length > 0 && excludedOfferId) {
+        listOffers = body.offers.filter(o => o.id !== excludedOfferId);
+      } else if (body.offers.length > 0 && !excludedOfferId) {
+        listOffers = body.offers;
       }
 
       if (excludedOfferId) {
@@ -61,7 +59,7 @@ const OffersProvider = props => {
 
       setOffers(formattedOffers);
 
-      setTotal(excludedOfferId ? body.totalCount : body.totalCount - 1);
+      setTotal(excludedOfferId ? body.totalCount - 1 : body.totalCount);
       setPageNumber(page);
     } catch (_) {
       setHasErrorOffers(true);
