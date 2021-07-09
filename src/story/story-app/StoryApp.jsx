@@ -346,7 +346,6 @@ const StoryApp = () => {
                 </div>
                 <StoryTitle story={s} onClickEnroll={handleEnrollOffer} />
                 <StoryDetails
-                  story={s}
                   isOfferDetailsOpen={isOfferDetailsOpen}
                   onToggleOfferDetails={handleToggleOfferDetailsBottomSheet}
                 />

@@ -6,16 +6,21 @@ import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 import Spacing, { SIZE } from '@pulse/ui-lib/src/components/spacing/Spacing';
 import moment from 'moment';
 
+import { useStory } from '../story-provider';
+
 import {
   SEGMENTS,
   SEGMENTS_DESCRIPTION,
   SALES_CHANNEL_DESCRIPTION,
   REWARD_TYPE,
+  DAYS,
+  ONLY,
 } from './constants';
-import { getOfferRulesetEligibleTransationsTitle } from './helpers';
+import { getOfferRulesetEligibleTransationsTitle, capitalize } from './helpers';
 import classes from './StoryDetails.scss';
 
-const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
+const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
+  const { activeStory } = useStory();
   return (
     <BottomSheet
       onDismiss={() => onToggleOfferDetails()}
@@ -41,13 +46,13 @@ const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
         </button>
       }
     >
-      {story.rewardValue && (
+      {activeStory.rewardValue && (
         <Spacing bottom={SIZE.STANDARD}>
           <h1 className={classes.sectionTitle}>
-            {story.rewardType === REWARD_TYPE.FIXED &&
-              `Spend ${story.currency}${story.minimumSpend} for ${story.currency}${story.rewardValue} Cashback on ${story.merchant.name}!`}
-            {story.rewardType === REWARD_TYPE.PERCENTAGE &&
-              `Spend ${story.currency} ${story.minimumSpend} for ${story.rewardValue}% Cashback on ${story.merchant.name}!`}
+            {activeStory.rewardType === REWARD_TYPE.FIXED &&
+              `Spend ${activeStory.currency}${activeStory.minimumSpend} for ${activeStory.currency}${activeStory.rewardValue} Cashback on ${activeStory.merchant.name}!`}
+            {activeStory.rewardType === REWARD_TYPE.PERCENTAGE &&
+              `Spend ${activeStory.currency} ${activeStory.minimumSpend} for ${activeStory.rewardValue}% Cashback on ${activeStory.merchant.name}!`}
           </h1>
         </Spacing>
       )}
@@ -55,7 +60,7 @@ const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
       <p
         className={classes.description}
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: story.description }}
+        dangerouslySetInnerHTML={{ __html: activeStory.description }}
       />
 
       <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
@@ -64,26 +69,26 @@ const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
       <p
         className={classes.description}
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: story.termsAndConditions }}
+        dangerouslySetInnerHTML={{ __html: activeStory.termsAndConditions }}
       />
 
-      {story.eligibleSegments.length > 0 && (
+      {activeStory.eligibleSegments.length > 0 && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Eligible cardholders</h1>
           </Spacing>
           <ul className={classes.list}>
-            {story.eligibleSegments.includes(SEGMENTS.NEW) && (
+            {activeStory.eligibleSegments.includes(SEGMENTS.NEW) && (
               <li className={classes.description}>
                 <Spacing bottom={SIZE.TINY}>{SEGMENTS_DESCRIPTION[SEGMENTS.NEW]}</Spacing>
               </li>
             )}
-            {story.eligibleSegments.includes(SEGMENTS.LAPSED) && (
+            {activeStory.eligibleSegments.includes(SEGMENTS.LAPSED) && (
               <li className={classes.description}>
                 <Spacing bottom={SIZE.TINY}>{SEGMENTS_DESCRIPTION[SEGMENTS.LAPSED]}</Spacing>
               </li>
             )}
-            {story.eligibleSegments.includes(SEGMENTS.LOYAL) && (
+            {activeStory.eligibleSegments.includes(SEGMENTS.LOYAL) && (
               <li className={classes.description}>
                 <Spacing bottom={SIZE.TINY}>{SEGMENTS_DESCRIPTION[SEGMENTS.LOYAL]}</Spacing>
               </li>
@@ -92,46 +97,61 @@ const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
         </>
       )}
 
-      <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
-        <h1 className={classes.sectionTitle}>Eligible transaction</h1>
-      </Spacing>
-      <p className={classes.description}>
-        {getOfferRulesetEligibleTransationsTitle({
-          rewardFrequency: story.rewardFrequency,
-          rewardingRestricted: !story.rewardEveryTransaction,
-          restrictedPurchaseCount: story.minimumTransactions,
-        })}
-      </p>
+      <>
+        <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
+          <h1 className={classes.sectionTitle}>Eligible transaction</h1>
+        </Spacing>
+        <ul className={classes.list}>
+          <li className={classes.description}>
+            <Spacing bottom={SIZE.TINY}>
+              {getOfferRulesetEligibleTransationsTitle({
+                rewardFrequency: activeStory.rewardFrequency,
+                rewardingRestricted: !activeStory.rewardEveryTransaction,
+                restrictedPurchaseCount: activeStory.minimumTransactions,
+              })}
+              {activeStory.rewardFrequency === ONLY ? 'on ' : ''}
+              {activeStory.eligibleDays
+                .sort((a, b) => DAYS[a] - DAYS[b])
+                .map(
+                  (day, index) =>
+                    ` ${capitalize(day)}${index < activeStory.eligibleDays.length - 2 ? ', ' : ''}${
+                      index === activeStory.eligibleDays.length - 2 ? ` and ` : ''
+                    } `
+                )}
+            </Spacing>
+          </li>
+        </ul>
+      </>
 
-      {story.customerRedemptionLimit && (
+      {activeStory.customerRedemptionLimit && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Maximum Redeem Limit</h1>
           </Spacing>
-          <p className={classes.description}>{story.customerRedemptionLimit}</p>
+          <p className={classes.description}>{activeStory.customerRedemptionLimit}</p>
         </>
       )}
 
-      {story.rewardType === REWARD_TYPE.PERCENTAGE && (
+      {activeStory.rewardType === REWARD_TYPE.PERCENTAGE && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Percentage discount</h1>
           </Spacing>
           <ul className={classes.list}>
-            <li className={classes.description}>{story.rewardValue}</li>
+            <li className={classes.description}>{activeStory.rewardValue}</li>
           </ul>
         </>
       )}
 
-      {story.minimumSpend && (
+      {activeStory.minimumSpend && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Minimum purchase amount</h1>
           </Spacing>
           <ul className={classes.list}>
             <li className={classes.description}>
-              {story.currency}
-              {story.minimumSpend}
+              {activeStory.currency}
+              {activeStory.minimumSpend}
             </li>
           </ul>
         </>
@@ -146,22 +166,24 @@ const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
         <h1 className={classes.sectionTitle}>Sales Channel</h1>
       </Spacing>
       <ul className={classes.list}>
-        <li className={classes.description}>{SALES_CHANNEL_DESCRIPTION[story.salesChannel]}</li>
+        <li className={classes.description}>
+          {SALES_CHANNEL_DESCRIPTION[activeStory.salesChannel]}
+        </li>
       </ul>
 
-      {story.validFrom && (
+      {activeStory.validFrom && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Validity</h1>
           </Spacing>
           <ul className={classes.list}>
             <li className={classes.description}>
-              {`${moment(story.validFrom).format('DD MMM YYYY')} at ${moment(
-                story.validFrom
+              {`${moment(activeStory.validFrom).format('DD MMM YYYY')} at ${moment(
+                activeStory.validFrom
               ).format('hh:mm:ss A')}`}
-              {story.validTo &&
-                ` to ${moment(story.validTo).format('DD MMM YYYY')} at ${moment(
-                  story.validTo
+              {activeStory.validTo &&
+                ` to ${moment(activeStory.validTo).format('DD MMM YYYY')} at ${moment(
+                  activeStory.validTo
                 ).format('hh:mm:ss A')}`}
             </li>
           </ul>
@@ -171,40 +193,7 @@ const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
   );
 };
 
-StoryDetails.defaultProps = {
-  story: {
-    validFrom: '',
-    validTo: '',
-    redemptionLimit: null,
-    minimumTransactions: null,
-    minimumSpend: null,
-    customerRedemptionLimit: null,
-    rewardFrequency: null,
-  },
-};
-
 StoryDetails.propTypes = {
-  story: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    termsAndConditions: PropTypes.string.isRequired,
-    rewardType: PropTypes.string.isRequired,
-    minimumSpend: PropTypes.number,
-    rewardValue: PropTypes.number.isRequired,
-    salesChannel: PropTypes.string.isRequired,
-    currency: PropTypes.string.isRequired,
-    rewardFrequency: PropTypes.string,
-    customerRedemptionLimit: PropTypes.number,
-    rewardEveryTransaction: PropTypes.bool.isRequired,
-    redemptionLimit: PropTypes.number,
-    minimumTransactions: PropTypes.number,
-    eligibleSegments: PropTypes.arrayOf(PropTypes.string).isRequired,
-
-    merchant: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-    validFrom: PropTypes.string,
-    validTo: PropTypes.string,
-  }),
   onToggleOfferDetails: PropTypes.func.isRequired,
   isOfferDetailsOpen: PropTypes.bool.isRequired,
 };
