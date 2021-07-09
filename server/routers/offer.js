@@ -11,7 +11,7 @@ router.get(
   '/',
   asyncHandler(async (req, res) => {
     const {
-      query: { limit, page },
+      query: { limit, page, offerId },
     } = req;
 
     res.status(200).send(
@@ -19,6 +19,7 @@ router.get(
         url: `${externalOfferApiUrl}/offer?${queryString({
           limit,
           page,
+          offerId,
         })}`,
         headers: {
           'X-Api-Key': req.headers['x-api-key'],

@@ -6,8 +6,6 @@ import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 import Spacing, { SIZE } from '@pulse/ui-lib/src/components/spacing/Spacing';
 import moment from 'moment';
 
-import { useStory } from '../story-provider';
-
 import {
   SEGMENTS,
   SEGMENTS_DESCRIPTION,
@@ -17,8 +15,7 @@ import {
 import { getOfferRulesetEligibleTransationsTitle } from './helpers';
 import classes from './StoryDetails.scss';
 
-const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
-  const { activeStory } = useStory();
+const StoryDetails = ({ story, isOfferDetailsOpen, onToggleOfferDetails }) => {
   return (
     <BottomSheet
       onDismiss={() => onToggleOfferDetails()}
@@ -44,13 +41,13 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
         </button>
       }
     >
-      {activeStory.rewardValue && (
+      {story.rewardValue && (
         <Spacing bottom={SIZE.STANDARD}>
           <h1 className={classes.sectionTitle}>
-            {activeStory.rewardType === REWARD_TYPE.FIXED &&
-              `Spend ${activeStory.currency}${activeStory.minimumSpend} for ${activeStory.currency}${activeStory.rewardValue} Cashback on ${activeStory.merchant.name}!`}
-            {activeStory.rewardType === REWARD_TYPE.PERCENTAGE &&
-              `Spend ${activeStory.currency} ${activeStory.minimumSpend} for ${activeStory.rewardValue}% Cashback on ${activeStory.merchant.name}!`}
+            {story.rewardType === REWARD_TYPE.FIXED &&
+              `Spend ${story.currency}${story.minimumSpend} for ${story.currency}${story.rewardValue} Cashback on ${story.merchant.name}!`}
+            {story.rewardType === REWARD_TYPE.PERCENTAGE &&
+              `Spend ${story.currency} ${story.minimumSpend} for ${story.rewardValue}% Cashback on ${story.merchant.name}!`}
           </h1>
         </Spacing>
       )}
@@ -58,7 +55,7 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
       <p
         className={classes.description}
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: activeStory.description }}
+        dangerouslySetInnerHTML={{ __html: story.description }}
       />
 
       <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
@@ -67,26 +64,26 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
       <p
         className={classes.description}
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: activeStory.termsAndConditions }}
+        dangerouslySetInnerHTML={{ __html: story.termsAndConditions }}
       />
 
-      {activeStory.eligibleSegments.length > 0 && (
+      {story.eligibleSegments.length > 0 && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Eligible cardholders</h1>
           </Spacing>
           <ul className={classes.list}>
-            {activeStory.eligibleSegments.includes(SEGMENTS.NEW) && (
+            {story.eligibleSegments.includes(SEGMENTS.NEW) && (
               <li className={classes.description}>
                 <Spacing bottom={SIZE.TINY}>{SEGMENTS_DESCRIPTION[SEGMENTS.NEW]}</Spacing>
               </li>
             )}
-            {activeStory.eligibleSegments.includes(SEGMENTS.LAPSED) && (
+            {story.eligibleSegments.includes(SEGMENTS.LAPSED) && (
               <li className={classes.description}>
                 <Spacing bottom={SIZE.TINY}>{SEGMENTS_DESCRIPTION[SEGMENTS.LAPSED]}</Spacing>
               </li>
             )}
-            {activeStory.eligibleSegments.includes(SEGMENTS.LOYAL) && (
+            {story.eligibleSegments.includes(SEGMENTS.LOYAL) && (
               <li className={classes.description}>
                 <Spacing bottom={SIZE.TINY}>{SEGMENTS_DESCRIPTION[SEGMENTS.LOYAL]}</Spacing>
               </li>
@@ -100,41 +97,41 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
       </Spacing>
       <p className={classes.description}>
         {getOfferRulesetEligibleTransationsTitle({
-          rewardFrequency: activeStory.rewardFrequency,
-          rewardingRestricted: !activeStory.rewardEveryTransaction,
-          restrictedPurchaseCount: activeStory.minimumTransactions,
+          rewardFrequency: story.rewardFrequency,
+          rewardingRestricted: !story.rewardEveryTransaction,
+          restrictedPurchaseCount: story.minimumTransactions,
         })}
       </p>
 
-      {activeStory.customerRedemptionLimit && (
+      {story.customerRedemptionLimit && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Maximum Redeem Limit</h1>
           </Spacing>
-          <p className={classes.description}>{activeStory.customerRedemptionLimit}</p>
+          <p className={classes.description}>{story.customerRedemptionLimit}</p>
         </>
       )}
 
-      {activeStory.rewardType === REWARD_TYPE.PERCENTAGE && (
+      {story.rewardType === REWARD_TYPE.PERCENTAGE && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Percentage discount</h1>
           </Spacing>
           <ul className={classes.list}>
-            <li className={classes.description}>{activeStory.rewardValue}</li>
+            <li className={classes.description}>{story.rewardValue}</li>
           </ul>
         </>
       )}
 
-      {activeStory.minimumSpend && (
+      {story.minimumSpend && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Minimum purchase amount</h1>
           </Spacing>
           <ul className={classes.list}>
             <li className={classes.description}>
-              {activeStory.currency}
-              {activeStory.minimumSpend}
+              {story.currency}
+              {story.minimumSpend}
             </li>
           </ul>
         </>
@@ -149,24 +146,22 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
         <h1 className={classes.sectionTitle}>Sales Channel</h1>
       </Spacing>
       <ul className={classes.list}>
-        <li className={classes.description}>
-          {SALES_CHANNEL_DESCRIPTION[activeStory.salesChannel]}
-        </li>
+        <li className={classes.description}>{SALES_CHANNEL_DESCRIPTION[story.salesChannel]}</li>
       </ul>
 
-      {activeStory.validFrom && (
+      {story.validFrom && (
         <>
           <Spacing top={SIZE.STANDARD} bottom={SIZE.STANDARD}>
             <h1 className={classes.sectionTitle}>Validity</h1>
           </Spacing>
           <ul className={classes.list}>
             <li className={classes.description}>
-              {`${moment(activeStory.validFrom).format('DD MMM YYYY')} at ${moment(
-                activeStory.validFrom
+              {`${moment(story.validFrom).format('DD MMM YYYY')} at ${moment(
+                story.validFrom
               ).format('hh:mm:ss A')}`}
-              {activeStory.validTo &&
-                ` to ${moment(activeStory.validTo).format('DD MMM YYYY')} at ${moment(
-                  activeStory.validTo
+              {story.validTo &&
+                ` to ${moment(story.validTo).format('DD MMM YYYY')} at ${moment(
+                  story.validTo
                 ).format('hh:mm:ss A')}`}
             </li>
           </ul>
@@ -176,7 +171,40 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
   );
 };
 
+StoryDetails.defaultProps = {
+  story: {
+    validFrom: '',
+    validTo: '',
+    redemptionLimit: null,
+    minimumTransactions: null,
+    minimumSpend: null,
+    customerRedemptionLimit: null,
+    rewardFrequency: null,
+  },
+};
+
 StoryDetails.propTypes = {
+  story: PropTypes.shape({
+    description: PropTypes.string.isRequired,
+    termsAndConditions: PropTypes.string.isRequired,
+    rewardType: PropTypes.string.isRequired,
+    minimumSpend: PropTypes.number,
+    rewardValue: PropTypes.number.isRequired,
+    salesChannel: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    rewardFrequency: PropTypes.string,
+    customerRedemptionLimit: PropTypes.number,
+    rewardEveryTransaction: PropTypes.bool.isRequired,
+    redemptionLimit: PropTypes.number,
+    minimumTransactions: PropTypes.number,
+    eligibleSegments: PropTypes.arrayOf(PropTypes.string).isRequired,
+
+    merchant: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    validFrom: PropTypes.string,
+    validTo: PropTypes.string,
+  }),
   onToggleOfferDetails: PropTypes.func.isRequired,
   isOfferDetailsOpen: PropTypes.bool.isRequired,
 };

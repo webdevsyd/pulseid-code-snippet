@@ -2,19 +2,16 @@ import React from 'react';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 import PropTypes from 'prop-types';
 
-import { useStory } from '../story-provider';
-
 import classes from './StoryHeader.scss';
 
-const StoryHeader = ({ onSetOfferDetailsOpen }) => {
-  const { activeStory } = useStory();
+const StoryHeader = ({ story, onSetOfferDetailsOpen }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.leftWrapper}>
         <div className={classes.imageWrapper}>
-          <img src={activeStory.merchant.image} alt={activeStory.merchant.name} />
+          <img src={story.merchant.image} alt={story.merchant.name} />
         </div>
-        <span className={classes.title}>{activeStory.merchant.name}</span>
+        <span className={classes.title}>{story.merchant.name}</span>
       </div>
       <div className={classes.rightWrapper}>
         <button
@@ -33,6 +30,12 @@ const StoryHeader = ({ onSetOfferDetailsOpen }) => {
 };
 
 StoryHeader.propTypes = {
+  story: PropTypes.shape({
+    merchant: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
   onSetOfferDetailsOpen: PropTypes.func.isRequired,
 };
 

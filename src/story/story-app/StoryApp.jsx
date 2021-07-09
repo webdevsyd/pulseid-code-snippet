@@ -249,6 +249,8 @@ const StoryApp = () => {
     // Trigger when the user swipe back even though the current story is the first one
     if (swiper.activeIndex === 0 && swiper.isBeginning) {
       handleResumeStory();
+    } else if (swiper.activeIndex === storiesData.length - 1) {
+      handleResumeStory();
     }
   };
 
@@ -332,15 +334,19 @@ const StoryApp = () => {
                     duration={DURATION_IN_SEC}
                     story={s}
                   />
-                  <StoryHeader onSetOfferDetailsOpen={handleToggleOfferDetailsBottomSheet} />
+                  <StoryHeader
+                    story={s}
+                    onSetOfferDetailsOpen={handleToggleOfferDetailsBottomSheet}
+                  />
                   <StoryImage
                     onImageLoad={onImageLoad}
                     onStoryItemNavigation={handleStoryItemNavigation}
                     story={s}
                   />
                 </div>
-                <StoryTitle onClickEnroll={handleEnrollOffer} />
+                <StoryTitle story={s} onClickEnroll={handleEnrollOffer} />
                 <StoryDetails
+                  story={s}
                   isOfferDetailsOpen={isOfferDetailsOpen}
                   onToggleOfferDetails={handleToggleOfferDetailsBottomSheet}
                 />

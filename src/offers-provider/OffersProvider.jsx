@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import qs from 'query-string';
 
 import { getOffers, postOfferAttribution } from '../offers-api';
 import { useAuthentication } from '../authentication-provider';
@@ -21,25 +22,48 @@ const OffersProvider = props => {
   const [isSavingOfferAttribution, setIsSavingOfferAttribution] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const fetchOffers = async ({ page = pageNumber } = {}) => {
-    console.log('fetch offers');
+  const fetchOffers = async ({ page = pageNumber, excludedOfferId } = {}) => {
+    let listOffers = [];
+    let singleOffer = [];
     if (total === offers.length && offers.length > 0) return;
 
     try {
       setIsFetchingOffers(true);
       const body = await getOffers({ xApiKey, xApiSecret, page });
-      const formattedOffers = body.offers.map(o => ({
+
+      if (body.offers.length > 0) {
+        if (excludedOfferId) {
+          listOffers = body.offers.filter(o => o.id !== excludedOfferId);
+        } else {
+          listOffers = body.offers;
+        }
+      }
+
+      if (excludedOfferId) {
+        singleOffer = await getOffers({ xApiKey, xApiSecret, offerId: excludedOfferId });
+      }
+
+      if (excludedOfferId && offers.length === 0) {
+        listOffers = [...singleOffer.offers, ...listOffers];
+      } else if (excludedOfferId && offers.length > 0) {
+        listOffers = [...offers, ...singleOffer.offers, ...listOffers];
+      } else if (!excludedOfferId && offers.length > 0) {
+        listOffers = [...offers, ...listOffers];
+      }
+
+      const formattedOffers = listOffers.map(o => ({
         ...o,
         images:
           o.images.length > 0
             ? [...o.images.map(image => imageObject(image)), imageObject(DEFAULT_IMAGE)]
             : [imageObject(DEFAULT_IMAGE), imageObject(DEFAULT_IMAGE), imageObject(DEFAULT_IMAGE)],
       }));
-      setOffers([...offers, ...formattedOffers]);
-      setTotal(body.totalCount);
+
+      setOffers(formattedOffers);
+
+      setTotal(excludedOfferId ? body.totalCount : body.totalCount - 1);
       setPageNumber(page);
-    } catch (e) {
-      console.log(e);
+    } catch (_) {
       setHasErrorOffers(true);
     } finally {
       setIsFetchingOffers(false);
@@ -66,7 +90,14 @@ const OffersProvider = props => {
 
   useEffect(() => {
     (async () => {
-      await fetchOffers();
+      const urlParams = qs.parse(window.location.search);
+
+      if (urlParams.offer_id) {
+        // eslint-disable-next-line radix
+        await fetchOffers({ excludedOfferId: parseInt(urlParams.offer_id) });
+      } else {
+        await fetchOffers();
+      }
     })();
   }, []);
 

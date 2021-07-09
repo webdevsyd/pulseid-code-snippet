@@ -1,13 +1,13 @@
 import qs from 'query-string';
 import axios from 'axios';
 
-const LIMIT = 10;
+const LIMIT = 4;
 
 const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : 'http://localhost:3006';
 
-export const getOffers = async ({ page, xApiKey, xApiSecret } = {}) => {
+export const getOffers = async ({ page, offerId, xApiKey, xApiSecret } = {}) => {
   const response = await fetch(
-    `${PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page })}`,
+    `${PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page, offerId })}`,
     {
       method: 'GET',
       headers: {
