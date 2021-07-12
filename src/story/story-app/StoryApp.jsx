@@ -309,51 +309,55 @@ const StoryApp = () => {
   if (isFetchingOffers) return <StoryLoader />;
 
   return (
-    <Swiper
-      className={classes.swiperWrapper}
-      ref={swiperRef}
-      onSlideResetTransitionEnd={swiper => handleSlideResetTransitionEnd(swiper)}
-      onSlidePrevTransitionEnd={handleSlidePrevTransitionEnd}
-      onSlideNextTransitionEnd={handleSlideNextTransitionEnd}
-      onSliderMove={swiper => handleSliderMove(swiper)}
-    >
-      {Object.keys(activeStory).length > 0 &&
-        storiesData.map(s => {
-          return (
-            <SwiperSlide key={s.id}>
-              <div
-                className={classes.wrapper}
-                style={{
-                  backgroundColor: backgroundColor || '',
-                }}
-              >
-                <div className={classes.mediaWrapper}>
-                  <StoryProgress
-                    isStoryStarted={isStoryStarted}
-                    isPause={isPause}
-                    duration={DURATION_IN_SEC}
-                    story={s}
-                  />
-                  <StoryHeader
-                    story={s}
-                    onSetOfferDetailsOpen={handleToggleOfferDetailsBottomSheet}
-                  />
-                  <StoryImage
-                    onImageLoad={onImageLoad}
-                    onStoryItemNavigation={handleStoryItemNavigation}
-                    story={s}
-                  />
+    <>
+      <Swiper
+        className={classes.swiperWrapper}
+        ref={swiperRef}
+        onSlideResetTransitionEnd={swiper => handleSlideResetTransitionEnd(swiper)}
+        onSlidePrevTransitionEnd={handleSlidePrevTransitionEnd}
+        onSlideNextTransitionEnd={handleSlideNextTransitionEnd}
+        onSliderMove={swiper => handleSliderMove(swiper)}
+      >
+        {Object.keys(activeStory).length > 0 &&
+          storiesData.map(s => {
+            return (
+              <SwiperSlide key={s.id}>
+                <div
+                  className={classes.wrapper}
+                  style={{
+                    backgroundColor: backgroundColor || '',
+                  }}
+                >
+                  <div className={classes.mediaWrapper}>
+                    <StoryProgress
+                      isStoryStarted={isStoryStarted}
+                      isPause={isPause}
+                      duration={DURATION_IN_SEC}
+                      story={s}
+                    />
+                    <StoryHeader
+                      story={s}
+                      onSetOfferDetailsOpen={handleToggleOfferDetailsBottomSheet}
+                    />
+                    <StoryImage
+                      onImageLoad={onImageLoad}
+                      onStoryItemNavigation={handleStoryItemNavigation}
+                      story={s}
+                    />
+                  </div>
+                  <StoryTitle story={s} onClickEnroll={handleEnrollOffer} />
                 </div>
-                <StoryTitle story={s} onClickEnroll={handleEnrollOffer} />
-                <StoryDetails
-                  isOfferDetailsOpen={isOfferDetailsOpen}
-                  onToggleOfferDetails={handleToggleOfferDetailsBottomSheet}
-                />
-              </div>
-            </SwiperSlide>
-          );
-        })}
-    </Swiper>
+              </SwiperSlide>
+            );
+          })}
+      </Swiper>
+      {Object.keys(activeStory).length > 0 && (
+        <StoryDetails
+          isOfferDetailsOpen={isOfferDetailsOpen}
+          onToggleOfferDetails={handleToggleOfferDetailsBottomSheet}
+        />
+      )}
+    </>
   );
 };
 

@@ -1,7 +1,44 @@
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
+$scroll-height: 500;
+$header-height: 60;
+$footer-height: 86;
+$wrapper-height: $scroll-height + $header-height + $footer-height;
+
+.backdrop {
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.wrapper {
+  z-index: 2;
+  background: #FFFFFF;
+  border-radius: 30px 30px 0 0;
+  transition: all 0.4s ease;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  &.hide {
+    position: fixed;
+    bottom: -$wrapper-height + px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  height: $header-height + px;
+  padding: 0 24px;
+  box-shadow: 0 32px 32px 0 #ffffff;
+  position: relative;
+  top: -1px;
 }
 
 .closeIcon {
@@ -14,23 +51,29 @@
   transform: translateY(-50%);
 }
 
-[data-rsbs-header] {
-  box-shadow: 0 22px 22px 0 #ffffff;
-  position: relative;
-  padding: 0;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:before {
-    content: '';
-    background-color: transparent;
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+}
+
+.scrollWrapper {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  user-select: auto;
+  overflow-y: scroll;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 35px 25px;
+  box-sizing: border-box;
+  height: $scroll-height + px;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
-[data-rsbs-scroll] {
-  padding: 30px 25px;
-}
+.contentWrapper {}
 
 .sectionTitle {
   margin: 0;
@@ -56,14 +99,16 @@
   font-weight: 400;
 }
 
-
-[data-rsbs-footer] {
+.footer {
+  padding: 0 24px;
   box-shadow: 0 -16px 32px 0 rgba(0, 0, 0, 0.24);
+  background-color: #ffffff;
+  height: $footer-height + px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-[data-rsbs-backdrop] {
-  background-color: rgba(0, 0, 0, 0.2);
-}
 .closeButton {
   background-color: #eeeeee;
   border: none;

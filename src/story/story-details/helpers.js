@@ -1,4 +1,10 @@
-import { PURCHASE_COUNT_TEXT, PURCHASE_LIMIT_FREQUENCY_OPTIONS, ONLY, EVERY } from './constants';
+import {
+  REWARD_TYPE,
+  PURCHASE_COUNT_TEXT,
+  PURCHASE_LIMIT_FREQUENCY_OPTIONS,
+  ONLY,
+  EVERY,
+} from './constants';
 
 export const getPurchaseCountText = ({ restrictedPurchaseCount, rewardingRestricted } = {}) => {
   if (rewardingRestricted && restrictedPurchaseCount) {
@@ -40,6 +46,34 @@ export const getOfferRulesetEligibleTransationsTitle = ({
       restrictedPurchaseCount,
       rewardingRestricted,
     })}`;
+  }
+
+  return '';
+};
+
+export const getOfferTitle = ({
+  rewardType,
+  currency,
+  minimumSpend,
+  rewardValue,
+  merchantName,
+}) => {
+  if (rewardType === REWARD_TYPE.FIXED) {
+    if (!minimumSpend) {
+      return `Get ${currency}${rewardValue} Cashback on ${merchantName}!`;
+    }
+
+    return `Spend ${currency}${minimumSpend ||
+      ''} for ${currency}${rewardValue} Cashback on ${merchantName}!`;
+  }
+
+  if (rewardType === REWARD_TYPE.PERCENTAGE) {
+    if (!minimumSpend) {
+      return `Get ${currency}${rewardValue} Cashback on ${merchantName}!`;
+    }
+
+    return `Spend ${currency}${minimumSpend ||
+      ''} for %${currency}${rewardValue} Cashback on ${merchantName}!`;
   }
 
   return '';
