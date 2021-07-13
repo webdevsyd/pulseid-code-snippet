@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 
 import AuthenticationProvider from '../authentication-provider';
 import OffersProvider from '../offers-provider';
+import ConfigProvider from '../config-provider';
 
 import CarouselApp from './carousel-app';
 
 const App = ({ xApiKey, xApiSecret, externalUserId }) => (
   <AuthenticationProvider xApiKey={xApiKey} xApiSecret={xApiSecret} externalUserId={externalUserId}>
     <OffersProvider>
-      <CarouselApp />
+      <ConfigProvider>
+        <CarouselApp />
+      </ConfigProvider>
     </OffersProvider>
   </AuthenticationProvider>
 );

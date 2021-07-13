@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
+import { useConfig } from '../../config-provider';
+
 import EnrollIcon from './icon-enroll.svg';
 import classes from './StoryTitle.scss';
 
 const StoryDetails = ({ story, onClickEnroll }) => {
   // This is for the saving status only in this component
   const [isSaving, setIsSaving] = useState(false);
+
+  const { backgroundColor } = useConfig();
 
   const handleEnroll = async () => {
     try {
@@ -36,6 +40,7 @@ const StoryDetails = ({ story, onClickEnroll }) => {
         type="button"
         disabled={isSaving}
         className={classes.enrollButton}
+        style={{ backgroundColor }}
         onClick={() => handleEnroll(story.id)}
       >
         {isSaving ? (

@@ -4,11 +4,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useOffers } from '../../offers-provider';
+import { useConfig } from '../../config-provider';
 
 import classes from './CarouselCard.scss';
 
 const CarouselCard = ({ offer }) => {
   const { onSaveOfferAttribution } = useOffers();
+  const { borderColor } = useConfig();
   return (
     <div
       onClick={() => {
@@ -26,14 +28,14 @@ const CarouselCard = ({ offer }) => {
       <div className={classes.shadow} />
       {offer.rewardValue ? (
         <span className={classes.title}>
-          {offer.rewardType === 'FIXED' && `${offer.currency} ${offer.rewardValue} Cashback`}
+          {offer.rewardType === 'FIXED' && `${offer.currency}${offer.rewardValue} Cashback`}
           {offer.rewardType === 'PERCENTAGE' && `${offer.rewardValue}% Cashback`}
         </span>
       ) : (
         <div />
       )}
       <div className={classes.info}>
-        <div className={classes.imageContainer}>
+        <div className={classes.imageContainer} style={{ borderColor }}>
           <img
             src={offer.merchant.image}
             title={offer.merchant.name}

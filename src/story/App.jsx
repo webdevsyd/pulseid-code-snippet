@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import AuthenticationProvider from '../authentication-provider';
 import OffersProvider from '../offers-provider';
+import ConfigProvider from '../config-provider';
 
 import StoryProvider from './story-provider';
 import StoryApp from './story-app';
@@ -10,9 +11,11 @@ import StoryApp from './story-app';
 const App = ({ xApiKey, xApiSecret, externalUserId }) => (
   <AuthenticationProvider xApiKey={xApiKey} xApiSecret={xApiSecret} externalUserId={externalUserId}>
     <OffersProvider>
-      <StoryProvider>
-        <StoryApp />
-      </StoryProvider>
+      <ConfigProvider>
+        <StoryProvider>
+          <StoryApp />
+        </StoryProvider>
+      </ConfigProvider>
     </OffersProvider>
   </AuthenticationProvider>
 );

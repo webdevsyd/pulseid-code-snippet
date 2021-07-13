@@ -14,6 +14,7 @@
 </head>
 <body>
   <div id="app"></div>
+  <script>window.pulseConfig = { "backgroundColor": "#00ffcc", "borderColor": "#00FFCC" }</script>
   <% for (key in htmlWebpackPlugin.files.js) { %>
     <script data-aid="js-link" type="text/javascript" src="<%= htmlWebpackPlugin.files.js[key] %>"></script>
   <% } %>
