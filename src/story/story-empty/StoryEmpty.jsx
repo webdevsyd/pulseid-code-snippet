@@ -28,7 +28,16 @@ const StoryEmpty = () => {
         >
           Reload Page
         </button>
-        <button type="button" className={classes.backButton}>
+        <button
+          type="button"
+          className={classes.backButton}
+          onClick={() => {
+            if (typeof PulseiD !== 'undefined') {
+              // eslint-disable-next-line no-undef
+              PulseiD.onCancel();
+            }
+          }}
+        >
           Back to Home
         </button>
       </div>
