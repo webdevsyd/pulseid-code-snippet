@@ -8,3 +8,18 @@
 .wrapper::-webkit-scrollbar {
   display: none;
 }
+
+.title {
+  color: #ff9000;
+  font-weight: 500;
+  font-size: 18px;
+  display: block;
+}
+
+.subTitle {
+  color: #000000;
+  font-size: 15px;
+  display: block;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}

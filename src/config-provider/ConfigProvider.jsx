@@ -14,12 +14,16 @@ const backgroundColor =
     ? window.pulseConfig.backgroundColor || DEFAULT_BG_COLOR
     : DEFAULT_BG_COLOR;
 
+const title = typeof window.pulseConfig !== 'undefined' ? window.pulseConfig.title || '' : '';
+
+const subTitle = typeof window.pulseConfig !== 'undefined' ? window.pulseConfig.subTitle || '' : '';
+
 const ConfigContext = React.createContext({});
 
 const ConfigProvider = ({ children }) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <ConfigContext.Provider value={{ borderColor, backgroundColor }}>
+    <ConfigContext.Provider value={{ title, subTitle, borderColor, backgroundColor }}>
       {children}
     </ConfigContext.Provider>
   );
