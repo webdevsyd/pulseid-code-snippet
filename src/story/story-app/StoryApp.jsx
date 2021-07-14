@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import ColorThief from 'colorthief';
@@ -43,9 +44,12 @@ const StoryApp = () => {
     offers: storiesData,
     onSaveOfferAttribution,
     onShowEnrolledPopup,
+    onFetchOffers,
+    onFetchOffersAttribution,
+    onFetchingInitialOffer,
     isFetchingInitialOffer,
-    hasErrorOffers,
     isShowEnrolledPopup,
+    hasErrorOffers,
   } = useOffers();
   const swiperRef = useRef(null);
   const [isSwiping, setIsSwiping] = useState(false);
@@ -302,6 +306,23 @@ const StoryApp = () => {
       });
     }
   }, [storiesData]);
+
+  useEffect(() => {
+    (async () => {
+      onFetchingInitialOffer(true);
+      const urlParams = qs.parse(window.location.search);
+
+      await onFetchOffersAttribution();
+
+      if (urlParams.offer_id) {
+        await onFetchOffers({ excludedOfferId: parseInt(urlParams.offer_id) });
+      } else {
+        await onFetchOffers();
+      }
+
+      onFetchingInitialOffer(false);
+    })();
+  }, []);
 
   useEffect(() => {
     const urlParams = qs.parse(window.location.search);

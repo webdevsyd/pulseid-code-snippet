@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CarouselLoader from '../carousel-loader';
 import CarouselEmpty from '../carousel-empty';
@@ -8,9 +8,28 @@ import { useOffers } from '../../offers-provider';
 import classes from './CarouselApp.scss';
 
 const CarouselApp = () => {
-  const { isFetchingOffers, offers, hasErrorOffers } = useOffers();
-  if ((!isFetchingOffers && offers.length === 0) || hasErrorOffers) return <CarouselEmpty />;
-  if (isFetchingOffers && offers.length === 0)
+  const {
+    offers,
+    isFetchingInitialOffer,
+    hasErrorOffers,
+    onFetchingInitialOffer,
+    onFetchOffersAttribution,
+    onFetchOffers,
+  } = useOffers();
+
+  useEffect(() => {
+    (async () => {
+      onFetchingInitialOffer(true);
+
+      await onFetchOffersAttribution();
+      await onFetchOffers();
+
+      onFetchingInitialOffer(false);
+    })();
+  }, []);
+
+  if ((!isFetchingInitialOffer && offers.length === 0) || hasErrorOffers) return <CarouselEmpty />;
+  if (isFetchingInitialOffer && offers.length === 0)
     return (
       <div className={classes.scrollWrapper}>
         <CarouselLoader />
