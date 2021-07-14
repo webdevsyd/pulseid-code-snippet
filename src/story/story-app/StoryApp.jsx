@@ -1,7 +1,6 @@
 /* eslint-disable radix */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import ColorThief from 'colorthief';
 import qs from 'query-string';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // eslint-disable-next-line import/no-unresolved
@@ -18,27 +17,29 @@ import StoryDetails from '../story-details';
 import StoryEnrolledPopup from '../story-enrolled-popup';
 import { useOffers } from '../../offers-provider';
 
-import { DURATION_IN_SEC, DURATION_IN_MS } from './constants';
+import { DURATION_IN_SEC } from './constants';
 import classes from './StoryApp.scss';
-
-const colorThief = new ColorThief();
 
 const StoryApp = () => {
   const {
-    activeStory,
+    swiperRef,
     activeStoryIndex,
-    activeStoryItem,
     activeStoryItemIndex,
+    activeStory,
+    activeStoryItem,
+    isPause,
+    isStoryStarted,
+    backgroundColor,
     onSetActiveStory,
     onSetActiveStoryItem,
-
-    onSetNewActiveStory,
-    onSetNewActiveStoryItem,
-
-    isPause,
-    onResetPauseState,
-    onSetIsPause,
-    onSetPauseStoryId,
+    onPauseStory,
+    onResumeStory,
+    onImageLoad,
+    onStoryItemNavigation,
+    onSlideResetTransitionEnd,
+    onSlidePrevTransitionEnd,
+    onSlideNextTransitionEnd,
+    onSliderMove,
   } = useStory();
   const {
     offers: storiesData,
@@ -51,172 +52,7 @@ const StoryApp = () => {
     isShowEnrolledPopup,
     hasErrorOffers,
   } = useOffers();
-  const swiperRef = useRef(null);
-  const [isSwiping, setIsSwiping] = useState(false);
   const [isOfferDetailsOpen, setIsOfferDetailsOpen] = useState(false);
-  const [isStoryStarted, setIsStoryStarted] = useState(false);
-  const [startTime, setStartTime] = useState(null);
-  const [duration, setDuration] = useState(DURATION_IN_MS);
-
-  const [backgroundColor, setBackgroundColor] = useState('');
-
-  const handleResetDuration = () => {
-    return setDuration(DURATION_IN_MS);
-  };
-
-  const handleSetNewActiveStory = storyIndex => {
-    onSaveOfferAttribution({ offerId: storiesData[storyIndex].id, action: 'VIEW' });
-
-    Promise.resolve().then(() => {
-      ReactDOM.unstable_batchedUpdates(() => {
-        setIsStoryStarted(false);
-        setIsSwiping(false);
-      });
-    });
-
-    onSetNewActiveStory(storyIndex);
-
-    handleResetDuration();
-  };
-
-  const handleNextStory = () => {
-    if (activeStoryIndex < storiesData.length - 1) {
-      const storyIndex = activeStoryIndex + 1;
-      handleSetNewActiveStory(storyIndex);
-    }
-  };
-
-  const handlePreviousStory = () => {
-    if (activeStoryIndex !== 0) {
-      const storyIndex = activeStoryIndex - 1;
-      handleSetNewActiveStory(storyIndex);
-    }
-  };
-
-  const handleNextStoryImage = () => {
-    if (activeStoryItemIndex < activeStory.images.length - 1) {
-      console.log('next story image', 'image id', activeStoryItemIndex);
-
-      Promise.resolve().then(() => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          const storyItemIndex = activeStoryItemIndex + 1;
-          onSetNewActiveStoryItem(storyItemIndex);
-          handleResetDuration();
-        });
-      });
-    } else {
-      console.log('next story from image');
-      swiperRef.current.swiper.slideNext();
-    }
-  };
-
-  const handlePreviousStoryImage = () => {
-    if (activeStoryItemIndex !== 0) {
-      console.log('previous story image');
-
-      Promise.resolve().then(() => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          const storyItemIndex = activeStoryItemIndex - 1;
-          onSetNewActiveStoryItem(storyItemIndex);
-          handleResetDuration();
-        });
-      });
-    } else {
-      console.log('previous story from image');
-      swiperRef.current.swiper.slidePrev();
-    }
-  };
-
-  const handlePlayStory = () => {
-    console.log('PLAY STORY', activeStory.id);
-    window.clearTimeout(window.timerId);
-
-    window.timerId = window.setTimeout(() => {
-      if (activeStoryItemIndex < activeStory.images.length - 1) {
-        Promise.resolve().then(() => {
-          ReactDOM.unstable_batchedUpdates(() => {
-            setIsStoryStarted(false);
-            handleNextStoryImage(); // Next Item in the Story
-          });
-        });
-      } else if (activeStoryItemIndex !== storiesData.length - 1) {
-        console.log('next story from timer');
-        swiperRef.current.swiper.slideNext();
-      }
-    }, duration);
-  };
-
-  const handleResumeStory = () => {
-    Promise.resolve().then(() => {
-      ReactDOM.unstable_batchedUpdates(() => {
-        onResetPauseState();
-        handlePlayStory();
-      });
-    });
-  };
-
-  const handlePauseStory = id => {
-    if (!isPause) {
-      console.log('PAUSE STORY', id);
-      window.clearTimeout(window.timerId);
-
-      Promise.resolve().then(() => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          setDuration(duration - (Date.now() - startTime));
-          onSetIsPause(true);
-          onSetPauseStoryId(id);
-        });
-      });
-    }
-  };
-
-  const handleStoryItemNavigation = ({ x, y }) => {
-    if (!isSwiping) {
-      let activated = false;
-
-      if (x <= 80 && y >= 100) {
-        handlePreviousStoryImage();
-        activated = true;
-      } else if (x >= window.innerWidth - 100 && y >= 100) {
-        handleNextStoryImage();
-        activated = true;
-      }
-
-      if (!activated) {
-        if (!isPause) {
-          handlePauseStory(activeStoryItem.id);
-        } else {
-          handleResumeStory();
-        }
-      }
-    }
-  };
-
-  const start = () => {
-    Promise.resolve().then(() => {
-      ReactDOM.unstable_batchedUpdates(() => {
-        console.log('START', 'STORY ID ====>', activeStory.id);
-        setStartTime(Date.now());
-        setIsStoryStarted(true); // This will identify if the story animation will start
-      });
-    });
-
-    window.clearTimeout(window.timerId);
-
-    handlePlayStory();
-  };
-
-  const onImageLoad = () => {
-    console.log('IMAGE LOADED');
-
-    start();
-
-    const dominantColor = colorThief.getColor(
-      document.getElementById(`offerImage-${activeStoryItem.id}`)
-    );
-
-    setBackgroundColor(`rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`);
-  };
 
   const handleToggleOfferDetailsBottomSheet = () => {
     if (isOfferDetailsOpen) {
@@ -225,12 +61,12 @@ const StoryApp = () => {
       Promise.resolve().then(() => {
         ReactDOM.unstable_batchedUpdates(() => {
           setIsOfferDetailsOpen(false);
-          handleResumeStory();
+          onResumeStory();
         });
       });
     } else if (!isOfferDetailsOpen && !isPause) {
       console.log('open bottom sheet');
-      handlePauseStory(activeStoryItem.id);
+      onPauseStory(activeStoryItem.id);
       setIsOfferDetailsOpen(true);
     } else if (!isOfferDetailsOpen && isPause) {
       console.log('open bottom sheet');
@@ -242,7 +78,7 @@ const StoryApp = () => {
     console.log('click enroll offer button');
 
     if (!isPause) {
-      handlePauseStory(activeStoryItem.id);
+      onPauseStory(activeStoryItem.id);
     }
 
     await onSaveOfferAttribution({ offerId: id, action: 'ENROLL' });
@@ -251,44 +87,8 @@ const StoryApp = () => {
 
     setTimeout(() => {
       onShowEnrolledPopup(false);
-      handleResumeStory();
+      onResumeStory();
     }, 2000);
-  };
-
-  const handleSlideResetTransitionEnd = swiper => {
-    // Trigger when going to the next slide but decided not any more :D
-    onResetPauseState();
-    setIsSwiping(false);
-
-    // Trigger when the user swipe back even though the current story is the first one
-    if (swiper.activeIndex === 0 && swiper.isBeginning) {
-      handleResumeStory();
-    } else if (swiper.activeIndex === storiesData.length - 1) {
-      handleResumeStory();
-    }
-  };
-
-  const handleSlidePrevTransitionEnd = () => {
-    // Trigger when user's swipe
-    // Trigger when swiperRef.current.swiper.slidePrev() was called
-    console.log('slidePrevTransitionEnd prev story');
-    handlePreviousStory();
-  };
-
-  const handleSlideNextTransitionEnd = () => {
-    // Trigger when user's swipe
-    // Trigger when swiperRef.current.swiper.slideNext() was called
-    console.log('slideNextTransitionEnd next story');
-    handleNextStory();
-  };
-
-  const handleSliderMove = swiper => {
-    // Trigger when user starts to swipe
-    if (!isSwiping) {
-      console.log('onSlideMove');
-      setIsSwiping(true);
-      handlePauseStory(storiesData[swiper.activeIndex].images[activeStoryItemIndex].id);
-    }
   };
 
   useEffect(() => {
@@ -345,10 +145,10 @@ const StoryApp = () => {
       <Swiper
         className={classes.swiperWrapper}
         ref={swiperRef}
-        onSlideResetTransitionEnd={swiper => handleSlideResetTransitionEnd(swiper)}
-        onSlidePrevTransitionEnd={handleSlidePrevTransitionEnd}
-        onSlideNextTransitionEnd={handleSlideNextTransitionEnd}
-        onSliderMove={swiper => handleSliderMove(swiper)}
+        onSlideResetTransitionEnd={swiper => onSlideResetTransitionEnd(swiper)}
+        onSlidePrevTransitionEnd={onSlidePrevTransitionEnd}
+        onSlideNextTransitionEnd={onSlideNextTransitionEnd}
+        onSliderMove={swiper => onSliderMove(swiper)}
       >
         {Object.keys(activeStory).length > 0 &&
           storiesData.map(s => {
@@ -373,7 +173,7 @@ const StoryApp = () => {
                     />
                     <StoryImage
                       onImageLoad={onImageLoad}
-                      onStoryItemNavigation={handleStoryItemNavigation}
+                      onStoryItemNavigation={onStoryItemNavigation}
                       story={s}
                     />
                   </div>
