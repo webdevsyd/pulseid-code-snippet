@@ -1,9 +1,10 @@
+/* eslint-disable radix */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import qs from 'query-string';
 
-import { getOffers, postOfferAttribution } from '../offers-api';
+import { getOffers, getEnrolledOffers, postOfferAttribution } from '../offers-api';
 import { useAuthentication } from '../authentication-provider';
 
 import DEFAULT_IMAGE from './default-image.png';
@@ -15,11 +16,15 @@ const imageObject = image => ({ id: uuidv4(), src: `${image}?random=${uuidv4()}`
 const OffersProvider = props => {
   const { xApiKey, xApiSecret, externalUserId } = useAuthentication();
   const [offers, setOffers] = useState([]);
+  const [enrolledOffers, setEnrolledOffers] = useState([]);
+  const [viewedOffers, setViewedOffers] = useState([]);
   const [total, setTotal] = useState(0);
+  const [isShowEnrolledPopup, setIsShowEnrolledPopup] = useState(false);
   const [hasErrorOffers, setHasErrorOffers] = useState(false);
   const [hasErrorOfferAttribution, setHasErrorOfferAttribution] = useState(false);
+  const [isFetchingInitialOffer, setIsFetchingInitialOffer] = useState(false);
   const [isFetchingOffers, setIsFetchingOffers] = useState(false);
-  const [isSavingOfferAttribution, setIsSavingOfferAttribution] = useState(false);
+  const [isFetchingOfferAttribution, setIsFetchingOfferAttribution] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
 
   const fetchOffers = async ({ page = pageNumber, excludedOfferId } = {}) => {
@@ -68,15 +73,33 @@ const OffersProvider = props => {
     }
   };
 
+  const fetchEnrolledOffers = async () => {
+    try {
+      setIsFetchingOfferAttribution(true);
+      const { data } = await getEnrolledOffers({ xApiKey, xApiSecret, externalUserId });
+
+      if (data.attributions) {
+        setEnrolledOffers(data.attributions.filter(a => a.enroll).map(a => a.offerId));
+        setViewedOffers(data.attributions.filter(a => a.view).map(a => a.offerId));
+      }
+    } catch (e) {
+      setEnrolledOffers([]);
+    } finally {
+      setIsFetchingOfferAttribution(false);
+    }
+  };
+
   const saveOfferAttribution = async ({ offerId, action }) => {
     try {
-      setIsSavingOfferAttribution(true);
       await postOfferAttribution({ externalUserId, offerId, action, xApiKey, xApiSecret });
+
+      if (action === 'ENROLL') {
+        setEnrolledOffers([...enrolledOffers, parseInt(offerId)]);
+      }
+
       setHasErrorOfferAttribution(false);
     } catch {
       setHasErrorOfferAttribution(true);
-    } finally {
-      setIsSavingOfferAttribution(false);
     }
   };
 
@@ -88,7 +111,10 @@ const OffersProvider = props => {
 
   useEffect(() => {
     (async () => {
+      setIsFetchingInitialOffer(true);
       const urlParams = qs.parse(window.location.search);
+
+      await fetchEnrolledOffers();
 
       if (urlParams.offer_id) {
         // eslint-disable-next-line radix
@@ -96,6 +122,8 @@ const OffersProvider = props => {
       } else {
         await fetchOffers();
       }
+
+      setIsFetchingInitialOffer(false);
     })();
   }, []);
 
@@ -103,14 +131,21 @@ const OffersProvider = props => {
     <OffersContext.Provider
       value={{
         offers,
+        enrolledOffers,
+        viewedOffers,
+        isShowEnrolledPopup,
+        isFetchingInitialOffer,
         isFetchingOffers,
-        isSavingOfferAttribution,
+        isFetchingOfferAttribution,
         hasErrorOffers,
         hasErrorOfferAttribution,
         pageNumber,
+        OnFetchingInitialOffer: setIsFetchingInitialOffer,
         onFetchOffers: fetchOffers,
+        onFetchEnrolledOffers: fetchEnrolledOffers,
         onResetOffers: resetOffer,
         onSaveOfferAttribution: saveOfferAttribution,
+        onShowEnrolledPopup: setIsShowEnrolledPopup,
       }}
       {...props}
     />

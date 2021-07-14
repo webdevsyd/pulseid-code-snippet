@@ -23,7 +23,7 @@ ReactDOM.render(
   <App
     xApiKey={process.env.X_API_KEY}
     xApiSecret={process.env.X_API_SECRET}
-    externalUserId={1231}
+    externalUserId={process.env.EXTERNAL_USER_ID}
   />,
   document.getElementById('app')
 );

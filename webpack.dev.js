@@ -10,6 +10,7 @@ const envConfig = {
   'process.env': {
     X_API_KEY: JSON.stringify(appConfig.X_API_KEY),
     X_API_SECRET: JSON.stringify(appConfig.X_API_SECRET),
+    EXTERNAL_USER_ID: JSON.stringify(appConfig.EXTERNAL_USER_ID),
     PROXY_API_BASE: 'http://localhost:3006',
   },
 };

@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
 import { useOffers } from '../../offers-provider';
 import { useConfig } from '../../config-provider';
@@ -9,8 +11,10 @@ import { useConfig } from '../../config-provider';
 import classes from './CarouselCard.scss';
 
 const CarouselCard = ({ offer }) => {
-  const { onSaveOfferAttribution } = useOffers();
+  const { onSaveOfferAttribution, enrolledOffers, viewedOffers } = useOffers();
   const { borderColor } = useConfig();
+  const isOfferEnrolled = enrolledOffers.includes(offer.id);
+  const isOfferViewed = viewedOffers.includes(offer.id);
   return (
     <div
       onClick={() => {
@@ -35,13 +39,25 @@ const CarouselCard = ({ offer }) => {
         <div />
       )}
       <div className={classes.info}>
-        <div className={classes.imageContainer} style={{ borderColor }}>
+        <div
+          className={clsx(
+            classes.imageContainer,
+            isOfferEnrolled && classes.enrolled,
+            isOfferViewed && classes.viewed
+          )}
+          style={{ borderColor }}
+        >
           <img
             src={offer.merchant.image}
             title={offer.merchant.name}
             alt="test"
             className={classes.image}
           />
+          {isOfferEnrolled && (
+            <div className={classes.iconContainer}>
+              <Icon icon={['fas', 'check']} />
+            </div>
+          )}
         </div>
         <span className={classes.company}>{offer.merchant.name}</span>
       </div>
@@ -70,4 +86,4 @@ CarouselCard.propTypes = {
   }),
 };
 
-export default CarouselCard;
+export default memo(CarouselCard);

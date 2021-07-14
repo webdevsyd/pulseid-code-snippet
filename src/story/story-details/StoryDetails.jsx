@@ -20,6 +20,7 @@ import classes from './StoryDetails.scss';
 
 const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
   const { activeStory } = useStory();
+
   return (
     <>
       {isOfferDetailsOpen && <div className={classes.backdrop} />}

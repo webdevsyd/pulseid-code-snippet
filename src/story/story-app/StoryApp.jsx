@@ -14,6 +14,7 @@ import StoryTitle from '../story-title';
 import StoryLoader from '../story-loader';
 import StoryEmpty from '../story-empty';
 import StoryDetails from '../story-details';
+import StoryEnrolledPopup from '../story-enrolled-popup';
 import { useOffers } from '../../offers-provider';
 
 import { DURATION_IN_SEC, DURATION_IN_MS } from './constants';
@@ -41,8 +42,10 @@ const StoryApp = () => {
   const {
     offers: storiesData,
     onSaveOfferAttribution,
-    isFetchingOffers,
+    onShowEnrolledPopup,
+    isFetchingInitialOffer,
     hasErrorOffers,
+    isShowEnrolledPopup,
   } = useOffers();
   const swiperRef = useRef(null);
   const [isSwiping, setIsSwiping] = useState(false);
@@ -235,10 +238,17 @@ const StoryApp = () => {
     console.log('click enroll offer button');
 
     if (!isPause) {
-      handlePauseStory(id);
+      handlePauseStory(activeStoryItem.id);
     }
 
     await onSaveOfferAttribution({ offerId: id, action: 'ENROLL' });
+
+    onShowEnrolledPopup(true);
+
+    setTimeout(() => {
+      onShowEnrolledPopup(false);
+      handleResumeStory();
+    }, 2000);
   };
 
   const handleSlideResetTransitionEnd = swiper => {
@@ -298,15 +308,16 @@ const StoryApp = () => {
 
     if (urlParams.offer_id) {
       onSaveOfferAttribution({
-        offerId: urlParams.id,
-        action: urlParams.offer_id,
+        offerId: urlParams.offer_id,
+        action: 'VIEW',
       });
     }
   }, []);
 
-  if ((!isFetchingOffers && storiesData.length === 0) || hasErrorOffers) return <StoryEmpty />;
+  if ((!isFetchingInitialOffer && storiesData.length === 0) || hasErrorOffers)
+    return <StoryEmpty />;
 
-  if (isFetchingOffers) return <StoryLoader />;
+  if (isFetchingInitialOffer) return <StoryLoader />;
 
   return (
     <>
@@ -345,12 +356,13 @@ const StoryApp = () => {
                       story={s}
                     />
                   </div>
-                  <StoryTitle story={s} onClickEnroll={handleEnrollOffer} />
+                  <StoryTitle key={s.id} story={s} onClickEnroll={handleEnrollOffer} />
                 </div>
               </SwiperSlide>
             );
           })}
       </Swiper>
+      {isShowEnrolledPopup && <StoryEnrolledPopup />}
       {Object.keys(activeStory).length > 0 && (
         <StoryDetails
           isOfferDetailsOpen={isOfferDetailsOpen}

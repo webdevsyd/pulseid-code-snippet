@@ -21,6 +21,12 @@ export const getOffers = async ({ page, offerId, xApiKey, xApiSecret } = {}) => 
   return body;
 };
 
+export const getEnrolledOffers = ({ externalUserId, xApiKey, xApiSecret }) => {
+  return axios.get(`${PROXY_API_BASE}/api/offer/attribution?${qs.stringify({ externalUserId })}`, {
+    headers: { 'X-Api-Key': xApiKey, 'X-Api-Secret': xApiSecret },
+  });
+};
+
 export const postOfferAttribution = async ({
   offerId,
   action,
@@ -30,7 +36,8 @@ export const postOfferAttribution = async ({
 }) => {
   await axios.post(
     `${PROXY_API_BASE}/api/offer/activation`,
-    { offerId, action, externalUserId: externalUserId.toString() },
+    // eslint-disable-next-line radix
+    { offerId: parseInt(offerId), action, externalUserId: externalUserId.toString() },
     { headers: { 'X-Api-Key': xApiKey, 'X-Api-Secret': xApiSecret } }
   );
 };

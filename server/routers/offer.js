@@ -30,6 +30,25 @@ router.get(
   })
 );
 
+router.get(
+  '/attribution',
+  asyncHandler(async (req, res) => {
+    const {
+      query: { externalUserId },
+    } = req;
+
+    res.status(200).send(
+      await call({
+        url: `${externalOfferApiUrl}/attribution?${queryString({ externalUserId })}`,
+        headers: {
+          'X-Api-Key': req.headers['x-api-key'],
+          'X-Api-Secret': req.headers['x-api-secret'],
+        },
+      })
+    );
+  })
+);
+
 router.post(
   '/activation',
   asyncHandler(async (req, res) => {

@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
 import { useConfig } from '../../config-provider';
+import { useOffers } from '../../offers-provider';
 
 import EnrollIcon from './icon-enroll.svg';
 import classes from './StoryTitle.scss';
 
-const StoryDetails = ({ story, onClickEnroll }) => {
+const StoryTitle = ({ story, onClickEnroll }) => {
   // This is for the saving status only in this component
   const [isSaving, setIsSaving] = useState(false);
 
   const { backgroundColor } = useConfig();
+  const { enrolledOffers } = useOffers();
+
+  const isOfferEnrolled = enrolledOffers.includes(story.id);
 
   const handleEnroll = async () => {
     try {
       setIsSaving(true);
       await onClickEnroll(story.id);
-    } catch {
       setIsSaving(false);
-    } finally {
+    } catch {
       setIsSaving(false);
     }
   };
@@ -38,8 +42,8 @@ const StoryDetails = ({ story, onClickEnroll }) => {
       </div>
       <button
         type="button"
-        disabled={isSaving}
-        className={classes.enrollButton}
+        disabled={isSaving || isOfferEnrolled}
+        className={clsx(classes.enrollButton, isOfferEnrolled && classes.enrolled)}
         style={{ backgroundColor }}
         onClick={() => handleEnroll(story.id)}
       >
@@ -48,7 +52,7 @@ const StoryDetails = ({ story, onClickEnroll }) => {
         ) : (
           <>
             <EnrollIcon className={classes.enrollIcon} />
-            Enroll
+            {isOfferEnrolled ? 'Enrolled' : 'Enroll'}
           </>
         )}
       </button>
@@ -56,7 +60,7 @@ const StoryDetails = ({ story, onClickEnroll }) => {
   );
 };
 
-StoryDetails.propTypes = {
+StoryTitle.propTypes = {
   story: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
@@ -64,4 +68,4 @@ StoryDetails.propTypes = {
   onClickEnroll: PropTypes.func.isRequired,
 };
 
-export default StoryDetails;
+export default memo(StoryTitle);
