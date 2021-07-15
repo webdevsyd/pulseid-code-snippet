@@ -11,7 +11,7 @@ import { useConfig } from '../../config-provider';
 import classes from './CarouselCard.scss';
 
 const CarouselCard = ({ offer }) => {
-  const { onSaveOfferAttribution, enrolledOffers, viewedOffers } = useOffers();
+  const { enrolledOffers, viewedOffers } = useOffers();
   const { borderColor } = useConfig();
   const isOfferEnrolled = enrolledOffers.includes(offer.id);
   const isOfferViewed = viewedOffers.includes(offer.id);
@@ -21,7 +21,6 @@ const CarouselCard = ({ offer }) => {
         if (typeof PulseiD !== 'undefined') {
           // eslint-disable-next-line no-undef
           PulseiD.onClickOffer(offer.id);
-          onSaveOfferAttribution({ offerId: offer.id, action: 'VIEW' });
         }
       }}
       className={classes.card}
