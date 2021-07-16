@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef, useState, createContext, useContext } from 'react';
+import React, { useEffect, useRef, useState, createContext, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import ColorThief from 'colorthief';
 
@@ -13,7 +13,14 @@ const colorThief = new ColorThief();
 
 const StoryProvider = props => {
   const swiperRef = useRef(null);
-  const { offers: storiesData, onSaveOfferAttribution } = useOffers();
+  const {
+    offers: storiesData,
+    total,
+    onSaveOfferAttribution,
+    pageNumber,
+    onFetchOffers,
+  } = useOffers();
+  const [hasRefetched, setHasRefetched] = useState(false);
   const [isSwiping, setIsSwiping] = useState(false);
   const [activeStory, setActiveStory] = useState({});
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
@@ -135,7 +142,10 @@ const StoryProvider = props => {
             handleNextStoryImage(); // Next Item in the Story
           });
         });
-      } else if (activeStoryItemIndex !== storiesData.length - 1) {
+      } else if (
+        activeStoryItemIndex === activeStory.images.length - 1 &&
+        storiesData.length < total
+      ) {
         console.log('next story from timer');
         swiperRef.current.swiper.slideNext();
       }
@@ -234,11 +244,20 @@ const StoryProvider = props => {
     handlePreviousStory();
   };
 
-  const handleSlideNextTransitionEnd = () => {
+  const handleSlideNextTransitionEnd = async () => {
     // Trigger when user's swipe
     // Trigger when swiperRef.current.swiper.slideNext() was called
     console.log('slideNextTransitionEnd next story');
-    handleNextStory();
+
+    if (activeStoryIndex === storiesData.length - 1) {
+      console.log('refetch offers');
+      setHasRefetched(false);
+      await onFetchOffers({ page: pageNumber + 1 });
+
+      setHasRefetched(true);
+    } else {
+      handleNextStory();
+    }
   };
 
   const handleSliderMove = swiper => {
@@ -249,6 +268,13 @@ const StoryProvider = props => {
       handlePauseStory(storiesData[swiper.activeIndex].images[activeStoryItemIndex].id);
     }
   };
+
+  useEffect(() => {
+    if (hasRefetched && storiesData.length > 0) {
+      console.log('next story after refetching offers', storiesData);
+      handleNextStory();
+    }
+  }, [hasRefetched, storiesData]);
 
   return (
     <StoryContext.Provider

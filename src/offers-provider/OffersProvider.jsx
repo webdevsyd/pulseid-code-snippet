@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { uniqBy, prop } from 'ramda';
 
 import { getOffers, getEnrolledOffers, postOfferAttribution } from '../offers-api';
 import { useAuthentication } from '../authentication-provider';
@@ -63,9 +64,9 @@ const OffersProvider = props => {
             : [imageObject(DEFAULT_IMAGE)],
       }));
 
-      setOffers(formattedOffers);
+      setOffers(uniqBy(prop('id'), formattedOffers));
 
-      setTotal(excludedOfferId ? body.totalCount - 1 : body.totalCount);
+      setTotal(body.totalCount);
       setPageNumber(page);
     } catch (_) {
       setHasErrorOffers(true);
@@ -140,6 +141,7 @@ const OffersProvider = props => {
         hasErrorOffers,
         hasErrorOfferAttribution,
         pageNumber,
+        total,
         onFetchingInitialOffer: setIsFetchingInitialOffer,
         onFetchOffers: fetchOffers,
         onFetchOffersAttribution: fetchOffersAttribution,

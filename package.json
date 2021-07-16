@@ -68,6 +68,7 @@
     "node-html-parser": "^3.3.4",
     "prop-types": "^15.7.2",
     "query-string": "^7.0.0",
+    "ramda": "^0.27.1",
     "react": "^16.8.2",
     "react-dom": "^16.14.0",
     "react-spring-bottom-sheet": "^3.2.1",

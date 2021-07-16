@@ -182,6 +182,11 @@ const StoryApp = () => {
               </SwiperSlide>
             );
           })}
+        {activeStoryIndex === storiesData.length - 1 && (
+          <SwiperSlide>
+            <StoryLoader />
+          </SwiperSlide>
+        )}
       </Swiper>
       {isShowEnrolledPopup && <StoryEnrolledPopup />}
       {Object.keys(activeStory).length > 0 && (
