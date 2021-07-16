@@ -4,7 +4,7 @@
   "description": "Code Snippet",
   "main": "index.js",
   "scripts": {
-    "start:frontend": "run.env -p ./server/.env-local webpack serve --config ./webpack.config.js",
+    "start:frontend": "cross-env NODE_ENV=development webpack serve --config ./webpack.config.js",
     "start:dev-server": "run.env -p ./server/.env-local nodemon ./server/boot.js",
     "start:full-dev": "concurrently --kill-others-on-fail \"npm run start:frontend\"  \"npm run start:dev-server\"",
     "start": "node ./server/boot.js",
