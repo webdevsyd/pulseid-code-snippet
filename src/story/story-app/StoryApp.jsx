@@ -82,14 +82,18 @@ const StoryApp = () => {
       onPauseStory(activeStoryItem.id);
     }
 
-    await onSaveOfferAttribution({ offerId: id, action: 'ENROLL' });
+    try {
+      await onSaveOfferAttribution({ offerId: id, action: 'ENROLL' });
 
-    onShowEnrolledPopup(true);
+      onShowEnrolledPopup(true);
 
-    setTimeout(() => {
-      onShowEnrolledPopup(false);
-      onResumeStory();
-    }, 2000);
+      setTimeout(() => {
+        onShowEnrolledPopup(false);
+        onResumeStory();
+      }, 2000);
+    } catch {
+      alert('Something went wrong while enrolling this offer');
+    }
   };
 
   useEffect(() => {
