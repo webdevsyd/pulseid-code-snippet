@@ -32,9 +32,11 @@ const StoryTitle = ({ story, onClickEnroll }) => {
     <div className={classes.wrapper}>
       <h1 className={classes.title}>{story.title}</h1>
       <div className={classes.otherDetailsWrapper}>
-        <div className={classes.dateWrapper}>
-          <span className={classes.date}>17 days left</span>
-        </div>
+        {story.validTo && (
+          <div className={classes.dateWrapper}>
+            <span className={classes.date}>17 days left</span>
+          </div>
+        )}
         <div className={classes.conditionWrapper}>
           <Icon icon={['fa', 'info-circle']} className={classes.icon} />
           <span className={classes.condition}>Conditions of Use</span>
@@ -64,6 +66,7 @@ StoryTitle.propTypes = {
   story: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
+    validTo: PropTypes.string,
   }).isRequired,
   onClickEnroll: PropTypes.func.isRequired,
 };
