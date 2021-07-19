@@ -9,6 +9,9 @@ import '../fonts/fonts.css?raw';
 
 import App from './App';
 
+// For future developer, upload the fonts.css and
+// webfont file in aws, so it will be cached via our CDN
+
 // WebFont.load({
 //   custom: {
 //     families: ['SF Pro Display:400,500,600', 'SF Pro Text:400', 'sans-serif'],

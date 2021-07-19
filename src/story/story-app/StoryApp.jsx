@@ -43,6 +43,7 @@ const StoryApp = () => {
   } = useStory();
   const {
     offers: storiesData,
+    total,
     onSaveOfferAttribution,
     onShowEnrolledPopup,
     onFetchOffers,
@@ -140,6 +141,7 @@ const StoryApp = () => {
 
   if (isFetchingInitialOffer) return <StoryLoader />;
 
+  console.log(total, storiesData.length);
   return (
     <>
       <Swiper
@@ -182,7 +184,7 @@ const StoryApp = () => {
               </SwiperSlide>
             );
           })}
-        {activeStoryIndex === storiesData.length - 1 && (
+        {activeStoryIndex === storiesData.length - 1 && total !== storiesData.length && (
           <SwiperSlide>
             <StoryLoader />
           </SwiperSlide>
