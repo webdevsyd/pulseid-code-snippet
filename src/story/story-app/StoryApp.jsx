@@ -91,8 +91,8 @@ const StoryApp = () => {
         onShowEnrolledPopup(false);
         onResumeStory();
       }, 2000);
-    } catch {
-      alert('Something went wrong while enrolling this offer');
+    } catch (e) {
+      alert(e);
     }
   };
 

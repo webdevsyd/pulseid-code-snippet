@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { uniqBy, prop } from 'ramda';
 
+import { ERROR_CODE } from '../errorCode';
 import { getOffers, getEnrolledOffers, postOfferAttribution } from '../offers-api';
 import { useAuthentication } from '../authentication-provider';
 
@@ -100,8 +101,9 @@ const OffersProvider = props => {
       }
 
       setHasErrorOfferAttribution(false);
-    } catch {
+    } catch (e) {
       setHasErrorOfferAttribution(true);
+      throw new Error(ERROR_CODE[e.response.data.errorCode]);
     }
   };
 
