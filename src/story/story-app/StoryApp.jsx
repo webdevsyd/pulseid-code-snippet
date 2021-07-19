@@ -141,7 +141,6 @@ const StoryApp = () => {
 
   if (isFetchingInitialOffer) return <StoryLoader />;
 
-  console.log(total, storiesData.length);
   return (
     <>
       <Swiper
