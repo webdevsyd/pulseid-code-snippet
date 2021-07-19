@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import qs from 'query-string';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -200,4 +200,4 @@ const StoryApp = () => {
   );
 };
 
-export default StoryApp;
+export default memo(StoryApp);
