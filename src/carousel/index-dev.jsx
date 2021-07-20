@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import icons from '@pulse/ui-lib/src/components/icons';
 
 // eslint-disable-next-line import/no-unresolved
 import '../index.css?raw';
 // eslint-disable-next-line import/no-unresolved
 import '../fonts/fonts.css?raw';
+import store from '../app/store';
 
 import App from './App';
 
@@ -23,10 +25,13 @@ import App from './App';
 icons.setup();
 
 ReactDOM.render(
-  <App
-    xApiKey={process.env.X_API_KEY}
-    xApiSecret={process.env.X_API_SECRET}
-    externalUserId={process.env.EXTERNAL_USER_ID}
-  />,
+  <Provider store={store}>
+    <App
+      apiKey={process.env.X_API_KEY}
+      apiSecret={process.env.X_API_SECRET}
+      externalUserId={process.env.EXTERNAL_USER_ID}
+    />
+    ,
+  </Provider>,
   document.getElementById('app')
 );

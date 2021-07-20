@@ -1,15 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import HorizontalScroll from '@pulse/ui-lib/src/components/horizontal-infinite-scroll';
 
 import CarouselCard from '../carousel-card/CarouselCard';
 import CarouselLoader from '../carousel-loader/CarouselLoader';
-import { useOffers } from '../../offers-provider';
 import { useConfig } from '../../config-provider';
 
+import * as actions from './actions';
+import * as selectors from './selectors';
 import classes from './CarouselLists.scss';
 
-const CarouselLists = () => {
-  const { offers, isFetchingOffers, onFetchOffers, pageNumber } = useOffers();
+const CarouselLists = ({ isFetchingOffers, offers, currentPage, onFetchOffers }) => {
   const { title, subTitle } = useConfig();
   return (
     <>
@@ -22,7 +24,7 @@ const CarouselLists = () => {
         offsetRight={100}
         onReachRight={() => {
           if (!isFetchingOffers) {
-            onFetchOffers({ page: pageNumber + 1 });
+            onFetchOffers({ page: currentPage + 1 });
           }
         }}
       >
@@ -35,4 +37,21 @@ const CarouselLists = () => {
   );
 };
 
-export default CarouselLists;
+CarouselLists.propTypes = {
+  isFetchingOffers: PropTypes.bool.isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  currentPage: PropTypes.number.isRequired,
+
+  onFetchOffers: PropTypes.func.isRequired,
+};
+
+export default connect(
+  state => ({
+    isFetchingOffers: selectors.isFetchingOffers(state),
+    offers: selectors.getOffers(state),
+    currentPage: selectors.getCurrentPage(state),
+  }),
+  {
+    onFetchOffers: actions.fetchOffers,
+  }
+)(CarouselLists);

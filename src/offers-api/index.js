@@ -1,27 +1,17 @@
 import qs from 'query-string';
 import axios from 'axios';
 
-const LIMIT = 2;
+const LIMIT = 4;
 
 const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : 'http://localhost:3006';
 
 export const getOffers = async ({ page, offerId, xApiKey, xApiSecret } = {}) => {
-  const response = await fetch(
-    `${PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page, offerId })}`,
-    {
-      method: 'GET',
-      headers: {
-        'X-Api-Key': xApiKey,
-        'X-Api-Secret': xApiSecret,
-      },
-    }
-  );
-  const body = await response.json();
-
-  return body;
+  return axios.get(`${PROXY_API_BASE}/api/offer?${qs.stringify({ limit: LIMIT, page, offerId })}`, {
+    headers: { 'X-Api-Key': xApiKey, 'X-Api-Secret': xApiSecret },
+  });
 };
 
-export const getEnrolledOffers = ({ externalUserId, xApiKey, xApiSecret }) => {
+export const getOfferAttributions = ({ externalUserId, xApiKey, xApiSecret }) => {
   return axios.get(`${PROXY_API_BASE}/api/offer/attribution?${qs.stringify({ externalUserId })}`, {
     headers: { 'X-Api-Key': xApiKey, 'X-Api-Secret': xApiSecret },
   });

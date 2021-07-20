@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { uniqBy, prop } from 'ramda';
 
 import { ERROR_CODE } from '../errorCode';
-import { getOffers, getEnrolledOffers, postOfferAttribution } from '../offers-api';
+import { getOffers, getOfferAttributions, postOfferAttribution } from '../offers-api';
 import { useAuthentication } from '../authentication-provider';
 
 import DEFAULT_IMAGE from './default-image.png';
@@ -79,7 +79,7 @@ const OffersProvider = props => {
   const fetchOffersAttribution = async () => {
     try {
       setIsFetchingOfferAttribution(true);
-      const { data } = await getEnrolledOffers({ xApiKey, xApiSecret, externalUserId });
+      const { data } = await getOfferAttributions({ xApiKey, xApiSecret, externalUserId });
 
       if (data.attributions) {
         setEnrolledOffers(data.attributions.filter(a => a.enroll).map(a => a.offerId));
