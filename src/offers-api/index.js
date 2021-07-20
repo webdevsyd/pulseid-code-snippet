@@ -1,7 +1,7 @@
 import qs from 'query-string';
 import axios from 'axios';
 
-const LIMIT = 4;
+const LIMIT = 2;
 
 const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : 'http://localhost:3006';
 
@@ -21,14 +21,14 @@ export const postOfferAttribution = async ({
   offerId,
   action,
   externalUserId,
-  xApiKey,
-  xApiSecret,
+  apiKey,
+  apiSecret,
 }) => {
   await axios.post(
     `${PROXY_API_BASE}/api/offer/activation`,
     // eslint-disable-next-line radix
     { offerId: parseInt(offerId), action, externalUserId: externalUserId.toString() },
-    { headers: { 'X-Api-Key': xApiKey, 'X-Api-Secret': xApiSecret } }
+    { headers: { 'X-Api-Key': apiKey, 'X-Api-Secret': apiSecret } }
   );
 };
 

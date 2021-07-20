@@ -5,8 +5,6 @@ import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 import Spacing, { SIZE } from '@pulse/ui-lib/src/components/spacing/Spacing';
 import moment from 'moment';
 
-import { useStory } from '../story-provider';
-
 import {
   SEGMENTS,
   SEGMENTS_DESCRIPTION,
@@ -18,9 +16,7 @@ import {
 import { getOfferRulesetEligibleTransationsTitle, capitalize, getOfferTitle } from './helpers';
 import classes from './StoryDetails.scss';
 
-const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
-  const { activeStory } = useStory();
-
+const StoryDetails = ({ activeStory, isOfferDetailsOpen, onToggleOfferDetails }) => {
   return (
     <>
       {isOfferDetailsOpen && <div className={classes.backdrop} />}
@@ -200,6 +196,26 @@ const StoryDetails = ({ isOfferDetailsOpen, onToggleOfferDetails }) => {
 StoryDetails.propTypes = {
   onToggleOfferDetails: PropTypes.func.isRequired,
   isOfferDetailsOpen: PropTypes.bool.isRequired,
+  activeStory: PropTypes.shape({
+    merchant: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    eligibleSegments: PropTypes.arrayOf(PropTypes.string),
+    description: PropTypes.string,
+    termsAndConditions: PropTypes.string,
+    currency: PropTypes.string,
+    minimumSpend: PropTypes.number,
+    rewardValue: PropTypes.number,
+    rewardType: PropTypes.string,
+    customerRedemptionLimit: PropTypes.number,
+    rewardFrequency: PropTypes.string,
+    eligibleDays: PropTypes.arrayOf(PropTypes.string),
+    rewardEveryTransaction: PropTypes.bool,
+    minimumTransactions: PropTypes.number,
+    salesChannel: PropTypes.string,
+    validTo: PropTypes.string,
+    validFrom: PropTypes.string,
+  }).isRequired,
 };
 
 export default StoryDetails;

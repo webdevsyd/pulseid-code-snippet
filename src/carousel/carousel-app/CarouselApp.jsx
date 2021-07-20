@@ -12,9 +12,7 @@ import classes from './CarouselApp.scss';
 
 const CarouselApp = ({ isFetchingOffers, offers, initialize }) => {
   useEffect(() => {
-    (async () => {
-      await initialize();
-    })();
+    initialize();
   }, []);
 
   if (!isFetchingOffers && offers.length === 0) return <CarouselEmpty />;

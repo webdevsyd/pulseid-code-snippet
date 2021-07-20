@@ -11,19 +11,19 @@ import { NAME, DEFAULT_LIMIT } from './constants';
 const imageObject = image => ({ id: uuidv4(), src: `${image}?random=${uuidv4()}` });
 
 export const [
-  setIsFetchingOffers,
-  setIsFetchingAttributions,
+  setIsFetching,
   setOffers,
   setTotal,
   setCurrentPage,
   setAttributions,
+  setHasRefetched,
 ] = createSetterActions(NAME, [
-  'isFetchingOffers',
-  'isFetchingAttributions',
+  'isFetching',
   'offers',
   'total',
   'currentPage',
   'attributions',
+  'hasRefetched',
 ]);
 
 export const reset = createAction(`${NAME}/RESET`);
@@ -34,8 +34,6 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
   const currentOffers = selectors.getOffers(state);
 
   if (total === currentOffers.length && currentOffers.length > 0) return;
-
-  dispatch(setIsFetchingOffers(true));
 
   try {
     const params = {
@@ -61,15 +59,12 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
     dispatch(setTotal(totalCount));
     dispatch(setCurrentPage(page));
   } catch (err) {
-    console.log(err);
-  } finally {
-    dispatch(setIsFetchingOffers(false));
+    throw new Error(err);
   }
 };
 
 export const fetchOffersAttribution = () => async (dispatch, getState) => {
   const state = getState();
-  dispatch(setIsFetchingAttributions(true));
 
   try {
     const params = {
@@ -84,15 +79,19 @@ export const fetchOffersAttribution = () => async (dispatch, getState) => {
 
     dispatch(setAttributions(attributions));
   } catch (err) {
-    console.log(err);
-  } finally {
-    dispatch(setIsFetchingAttributions(false));
+    throw new Error(err);
   }
 };
 
-export const initialize = ({ page = 0 } = {}) => dispatch => {
-  dispatch(fetchOffers({ page }));
-  dispatch(fetchOffersAttribution());
-};
+export const initialize = () => async dispatch => {
+  dispatch(setIsFetching(true));
 
-export default {};
+  try {
+    await dispatch(fetchOffers({ page: 0 }));
+    await dispatch(fetchOffersAttribution());
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    dispatch(setIsFetching(false));
+  }
+};
