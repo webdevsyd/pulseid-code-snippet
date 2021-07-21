@@ -1,7 +1,7 @@
 import qs from 'query-string';
 import axios from 'axios';
 
-const LIMIT = 2;
+const LIMIT = 10;
 
 const PROXY_API_BASE = window.PROXY_API_BASE ? window.PROXY_API_BASE : 'http://localhost:3006';
 
