@@ -23,7 +23,7 @@ const StoryHeader = ({ story, onSetIsDetailsPopupOpen }) => {
         </button>
         <button
           onClick={() => {
-            if (typeof PulseiD !== 'undefined' && /Android/.test(navigator.userAgent)) {
+            if (typeof PulseiD !== 'undefined') {
               // eslint-disable-next-line no-undef
               PulseiD.onCancel();
             }
