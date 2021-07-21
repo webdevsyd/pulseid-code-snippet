@@ -1,30 +1,28 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
 import { useConfig } from '../../config-provider';
-import { useOffers } from '../../offers-provider';
 
+import * as actions from './actions';
+import * as selectors from './selectors';
 import EnrollIcon from './icon-enroll.svg';
 import classes from './StoryTitle.scss';
 
-const StoryTitle = ({ story, onClickEnroll }) => {
-  // This is for the saving status only in this component
-  const [isSaving, setIsSaving] = useState(false);
-
+const StoryTitle = ({ enrolledOffers, story, isSaving, onClickEnroll, onSetIsSaving }) => {
   const { backgroundColor } = useConfig();
-  const { enrolledOffers } = useOffers();
 
   const isOfferEnrolled = enrolledOffers.includes(story.id);
 
   const handleEnroll = async () => {
     try {
-      setIsSaving(true);
+      onSetIsSaving(true);
       await onClickEnroll(story.id);
-      setIsSaving(false);
+      onSetIsSaving(false);
     } catch {
-      setIsSaving(false);
+      onSetIsSaving(false);
     }
   };
 
@@ -68,7 +66,17 @@ StoryTitle.propTypes = {
     title: PropTypes.string.isRequired,
     validTo: PropTypes.string,
   }).isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  enrolledOffers: PropTypes.arrayOf(PropTypes.number).isRequired,
   onClickEnroll: PropTypes.func.isRequired,
+  onSetIsSaving: PropTypes.func.isRequired,
 };
 
-export default memo(StoryTitle);
+export default connect(
+  state => ({
+    isSaving: selectors.isSaving(state),
+  }),
+  {
+    onSetIsSaving: actions.setIsSaving,
+  }
+)(memo(StoryTitle));

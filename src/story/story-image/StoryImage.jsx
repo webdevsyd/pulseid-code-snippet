@@ -5,15 +5,19 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { useStory } from '../story-provider';
-
 import classes from './StoryImage.scss';
 
 window.storyImageTimer = null;
 const touchDuration = 300; // length of time we want the user to touch before we do something
 
-const StoryImage = ({ story, onImageLoad, onStoryItemNavigation }) => {
-  const { activeStory, activeStoryItem, onSetIsPause } = useStory();
+const StoryImage = ({
+  activeStory,
+  activeStoryItem,
+  story,
+  onSetIsPause,
+  onImageLoad,
+  onStoryItemNavigation,
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleImageLoad = () => {
@@ -85,6 +89,15 @@ StoryImage.propTypes = {
   story: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
+  activeStory: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
+  activeStoryItem: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+  }).isRequired,
+
+  onSetIsPause: PropTypes.func.isRequired,
   onImageLoad: PropTypes.func.isRequired,
   onStoryItemNavigation: PropTypes.func.isRequired,
 };

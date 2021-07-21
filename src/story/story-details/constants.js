@@ -1,3 +1,5 @@
+export const NAME = 'story/details';
+
 export const SEGMENTS = {
   NEW: 'NEW',
   LAPSED: 'LAPSED',

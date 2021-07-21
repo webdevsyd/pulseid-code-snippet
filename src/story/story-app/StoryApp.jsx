@@ -1,136 +1,42 @@
-/* eslint-disable radix */
-import React, { memo, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import qs from 'query-string';
-import { Swiper, SwiperSlide } from 'swiper/react';
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/swiper.min.css?raw';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import queryString from 'query-string';
+import { connect } from 'react-redux';
 
-import { useStory } from '../story-provider';
-import StoryProgress from '../story-progress';
-import StoryHeader from '../story-header';
-import StoryImage from '../story-image';
-import StoryTitle from '../story-title';
-import StoryLoader from '../story-loader';
-import StoryEmpty from '../story-empty';
-import StoryDetails from '../story-details';
-import StoryEnrolledPopup from '../story-enrolled-popup';
-import { useOffers } from '../../offers-provider';
+import StoryLists from '../story-lists';
 
-import { DURATION_IN_SEC } from './constants';
-import classes from './StoryApp.scss';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
-const StoryApp = () => {
-  const {
-    swiperRef,
-    activeStoryIndex,
-    activeStoryItemIndex,
-    activeStory,
-    activeStoryItem,
-    isPause,
-    isStoryStarted,
-    backgroundColor,
-    onSetActiveStory,
-    onSetActiveStoryItem,
-    onPauseStory,
-    onResumeStory,
-    onImageLoad,
-    onStoryItemNavigation,
-    onSlideResetTransitionEnd,
-    onSlidePrevTransitionEnd,
-    onSlideNextTransitionEnd,
-    onSliderMove,
-  } = useStory();
-  const {
-    offers: storiesData,
-    total,
-    onSaveOfferAttribution,
-    onShowEnrolledPopup,
-    onFetchOffers,
-    onFetchOffersAttribution,
-    onFetchingInitialOffer,
-    isFetchingInitialOffer,
-    isShowEnrolledPopup,
-    hasErrorOffers,
-  } = useOffers();
-  const [isOfferDetailsOpen, setIsOfferDetailsOpen] = useState(false);
-
-  const handleToggleOfferDetailsBottomSheet = () => {
-    if (isOfferDetailsOpen) {
-      console.log('close bottom sheet');
-
-      Promise.resolve().then(() => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          setIsOfferDetailsOpen(false);
-          onResumeStory();
-        });
-      });
-    } else if (!isOfferDetailsOpen && !isPause) {
-      console.log('open bottom sheet');
-      onPauseStory(activeStoryItem.id);
-      setIsOfferDetailsOpen(true);
-    } else if (!isOfferDetailsOpen && isPause) {
-      console.log('open bottom sheet');
-      setIsOfferDetailsOpen(true);
-    }
-  };
-
-  const handleEnrollOffer = async id => {
-    console.log('click enroll offer button');
-
-    if (!isPause) {
-      onPauseStory(activeStoryItem.id);
-    }
-
-    try {
-      await onSaveOfferAttribution({ offerId: id, action: 'ENROLL' });
-
-      onShowEnrolledPopup(true);
-
-      setTimeout(() => {
-        onShowEnrolledPopup(false);
-        onResumeStory();
-      }, 2000);
-    } catch (e) {
-      alert(e);
-    }
-  };
-
+const StoryApp = ({
+  isPause,
+  isStoryStarted,
+  isSwiping,
+  pauseStoryId,
+  backgroundColor,
+  duration,
+  startTime,
+  activeStory,
+  activeStoryIndex,
+  activeStoryItem,
+  activeStoryItemIndex,
+  onSaveOfferAttribution,
+  onSetActiveStory,
+  onSetActiveStoryIndex,
+  onSetActiveStoryItem,
+  onSetActiveStoryItemIndex,
+  onSetBackgroundColor,
+  onSetIsStoryStarted,
+  onSetIsPause,
+  onSetPauseStoryId,
+  onSetStartTime,
+  onSetDuration,
+  onResetDuration,
+  onResetPause,
+  onSetIsSwiping,
+}) => {
   useEffect(() => {
-    if (Object.keys(activeStory).length === 0 && storiesData.length > 0) {
-      console.log('SET ACTIVE STORY');
-
-      Promise.resolve().then(() => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          onSetActiveStory(storiesData[activeStoryIndex]);
-
-          if (storiesData[activeStoryIndex].images.length > 0) {
-            onSetActiveStoryItem(storiesData[activeStoryIndex].images[activeStoryItemIndex]);
-          }
-        });
-      });
-    }
-  }, [storiesData]);
-
-  useEffect(() => {
-    (async () => {
-      onFetchingInitialOffer(true);
-      const urlParams = qs.parse(window.location.search);
-
-      await onFetchOffersAttribution();
-
-      if (urlParams.offer_id) {
-        await onFetchOffers({ excludedOfferId: parseInt(urlParams.offer_id) });
-      } else {
-        await onFetchOffers();
-      }
-
-      onFetchingInitialOffer(false);
-    })();
-  }, []);
-
-  useEffect(() => {
-    const urlParams = qs.parse(window.location.search);
+    const urlParams = queryString.parse(window.location.search);
 
     if (urlParams.offer_id) {
       onSaveOfferAttribution({
@@ -140,68 +46,101 @@ const StoryApp = () => {
     }
   }, []);
 
-  if ((!isFetchingInitialOffer && storiesData.length === 0) || hasErrorOffers)
-    return <StoryEmpty />;
-
-  if (isFetchingInitialOffer) return <StoryLoader />;
-
   return (
-    <>
-      <Swiper
-        className={classes.swiperWrapper}
-        ref={swiperRef}
-        onSlideResetTransitionEnd={swiper => onSlideResetTransitionEnd(swiper)}
-        onSlidePrevTransitionEnd={onSlidePrevTransitionEnd}
-        onSlideNextTransitionEnd={onSlideNextTransitionEnd}
-        onSliderMove={swiper => onSliderMove(swiper)}
-      >
-        {Object.keys(activeStory).length > 0 &&
-          storiesData.map(s => {
-            return (
-              <SwiperSlide key={s.id}>
-                <div
-                  className={classes.wrapper}
-                  style={{
-                    backgroundColor: backgroundColor || '',
-                  }}
-                >
-                  <div className={classes.mediaWrapper}>
-                    <StoryProgress
-                      isStoryStarted={isStoryStarted}
-                      isPause={isPause}
-                      duration={DURATION_IN_SEC}
-                      story={s}
-                    />
-                    <StoryHeader
-                      story={s}
-                      onSetOfferDetailsOpen={handleToggleOfferDetailsBottomSheet}
-                    />
-                    <StoryImage
-                      onImageLoad={onImageLoad}
-                      onStoryItemNavigation={onStoryItemNavigation}
-                      story={s}
-                    />
-                  </div>
-                  <StoryTitle key={s.id} story={s} onClickEnroll={handleEnrollOffer} />
-                </div>
-              </SwiperSlide>
-            );
-          })}
-        {activeStoryIndex === storiesData.length - 1 && total !== storiesData.length && (
-          <SwiperSlide>
-            <StoryLoader />
-          </SwiperSlide>
-        )}
-      </Swiper>
-      {isShowEnrolledPopup && <StoryEnrolledPopup />}
-      {Object.keys(activeStory).length > 0 && (
-        <StoryDetails
-          isOfferDetailsOpen={isOfferDetailsOpen}
-          onToggleOfferDetails={handleToggleOfferDetailsBottomSheet}
-        />
-      )}
-    </>
+    <StoryLists
+      isPause={isPause}
+      isStoryStarted={isStoryStarted}
+      isSwiping={isSwiping}
+      pauseStoryId={pauseStoryId}
+      backgroundColor={backgroundColor}
+      duration={duration}
+      startTime={startTime}
+      activeStory={activeStory}
+      activeStoryIndex={activeStoryIndex}
+      activeStoryItem={activeStoryItem}
+      activeStoryItemIndex={activeStoryItemIndex}
+      onSetActiveStory={onSetActiveStory}
+      onSetActiveStoryIndex={onSetActiveStoryIndex}
+      onSetActiveStoryItem={onSetActiveStoryItem}
+      onSetActiveStoryItemIndex={onSetActiveStoryItemIndex}
+      onSetBackgroundColor={onSetBackgroundColor}
+      onSetIsStoryStarted={onSetIsStoryStarted}
+      onSetStartTime={onSetStartTime}
+      onSetIsPause={onSetIsPause}
+      onSetPauseStoryId={onSetPauseStoryId}
+      onSetDuration={onSetDuration}
+      onResetDuration={onResetDuration}
+      onResetPause={onResetPause}
+      onSetIsSwiping={onSetIsSwiping}
+    />
   );
 };
 
-export default memo(StoryApp);
+StoryApp.defaultProps = {
+  activeStoryIndex: null,
+  activeStoryItemIndex: null,
+  startTime: null,
+};
+
+StoryApp.propTypes = {
+  activeStory: PropTypes.shape({}).isRequired,
+  activeStoryItem: PropTypes.shape({}).isRequired,
+
+  isPause: PropTypes.bool.isRequired,
+  isStoryStarted: PropTypes.bool.isRequired,
+  isSwiping: PropTypes.bool.isRequired,
+
+  activeStoryIndex: PropTypes.number,
+  activeStoryItemIndex: PropTypes.number,
+  pauseStoryId: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  startTime: PropTypes.number,
+
+  onSaveOfferAttribution: PropTypes.func.isRequired,
+  onSetActiveStory: PropTypes.func.isRequired,
+  onSetActiveStoryIndex: PropTypes.func.isRequired,
+  onSetActiveStoryItem: PropTypes.func.isRequired,
+  onSetActiveStoryItemIndex: PropTypes.func.isRequired,
+  onSetBackgroundColor: PropTypes.func.isRequired,
+  onSetIsStoryStarted: PropTypes.func.isRequired,
+  onSetIsPause: PropTypes.func.isRequired,
+  onSetPauseStoryId: PropTypes.func.isRequired,
+  onSetDuration: PropTypes.func.isRequired,
+  onResetDuration: PropTypes.func.isRequired,
+  onSetStartTime: PropTypes.func.isRequired,
+  onResetPause: PropTypes.func.isRequired,
+  onSetIsSwiping: PropTypes.func.isRequired,
+};
+
+export default connect(
+  state => ({
+    activeStory: selectors.getActiveStory(state),
+    activeStoryIndex: selectors.getActiveStoryIndex(state),
+    activeStoryItem: selectors.getActiveStoryItem(state),
+    activeStoryItemIndex: selectors.getActiveStoryItemIndex(state),
+    isPause: selectors.isPause(state),
+    isStoryStarted: selectors.isStoryStarted(state),
+    isSwiping: selectors.isSwiping(state),
+    pauseStoryId: selectors.pauseStoryId(state),
+    backgroundColor: selectors.getBackgroundColor(state),
+    duration: selectors.getDuration(state),
+    startTime: selectors.getStartTime(state),
+  }),
+  {
+    onSaveOfferAttribution: actions.postOfferAttribution,
+    onSetActiveStory: actions.setActiveStory,
+    onSetActiveStoryIndex: actions.setActiveStoryIndex,
+    onSetActiveStoryItem: actions.setActiveStoryItem,
+    onSetActiveStoryItemIndex: actions.setActiveStoryItemIndex,
+    onSetBackgroundColor: actions.setBackgroundColor,
+    onSetIsStoryStarted: actions.setIsStoryStarted,
+    onSetStartTime: actions.setStartTime,
+    onSetDuration: actions.setDuration,
+    onSetIsPause: actions.setIsPause,
+    onSetPauseStoryId: actions.setPauseStoryId,
+    onResetDuration: actions.resetDuration,
+    onResetPause: actions.resetPause,
+    onSetIsSwiping: actions.setIsSwiping,
+  }
+)(StoryApp);

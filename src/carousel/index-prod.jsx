@@ -22,8 +22,10 @@ export default {
     init = config;
   },
   render: () => {
-    // eslint-disable-next-line react/jsx-filename-extension
-    ReactDOM.render(<App xApiKey={init.xApiKey} xApiSecret={init.xApiSecret} externalUserId={init.euid} />, document.querySelector(init.selector));
+    ReactDOM.render(
+      <App xApiKey={init.xApiKey} xApiSecret={init.xApiSecret} externalUserId={init.euid} />,
+      document.querySelector(init.selector)
+    );
   },
   unmount() {
     ReactDOM.unmountComponentAtNode(document.querySelector(init.selector));

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import classes from './StoryHeader.scss';
 
-const StoryHeader = ({ story, onSetOfferDetailsOpen }) => {
+const StoryHeader = ({ story, onSetIsDetailsPopupOpen }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.leftWrapper}>
@@ -15,7 +15,7 @@ const StoryHeader = ({ story, onSetOfferDetailsOpen }) => {
       </div>
       <div className={classes.rightWrapper}>
         <button
-          onClick={() => onSetOfferDetailsOpen()}
+          onClick={() => onSetIsDetailsPopupOpen(true)}
           className={classes.buttonWrapper}
           type="button"
         >
@@ -45,7 +45,7 @@ StoryHeader.propTypes = {
       image: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  onSetOfferDetailsOpen: PropTypes.func.isRequired,
+  onSetIsDetailsPopupOpen: PropTypes.func.isRequired,
 };
 
 export default StoryHeader;

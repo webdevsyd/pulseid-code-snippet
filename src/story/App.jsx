@@ -1,29 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import AuthenticationProvider from '../authentication-provider';
-import OffersProvider from '../offers-provider';
 import ConfigProvider from '../config-provider';
+import * as authentication from '../authentication';
 
-import StoryProvider from './story-provider';
 import StoryApp from './story-app';
 
-const App = ({ xApiKey, xApiSecret, externalUserId }) => (
-  <AuthenticationProvider xApiKey={xApiKey} xApiSecret={xApiSecret} externalUserId={externalUserId}>
-    <OffersProvider>
-      <ConfigProvider>
-        <StoryProvider>
-          <StoryApp />
-        </StoryProvider>
-      </ConfigProvider>
-    </OffersProvider>
-  </AuthenticationProvider>
-);
+const App = ({ apiKey, apiSecret, externalUserId, initialize }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
-App.propTypes = {
-  xApiKey: PropTypes.string.isRequired,
-  xApiSecret: PropTypes.string.isRequired,
-  externalUserId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  useEffect(() => {
+    initialize({ apiKey, apiSecret, externalUserId });
+    setIsLoading(false);
+  }, []);
+
+  return !isLoading ? (
+    <ConfigProvider>
+      <StoryApp />
+    </ConfigProvider>
+  ) : null;
 };
 
-export default App;
+App.propTypes = {
+  apiKey: PropTypes.string.isRequired,
+  apiSecret: PropTypes.string.isRequired,
+  externalUserId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+
+  initialize: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  initialize: authentication.initialize,
+})(App);

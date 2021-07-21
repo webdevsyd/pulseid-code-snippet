@@ -2,12 +2,17 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { useStory } from '../story-provider';
-
 import classes from './StoryProgress.scss';
 
-const StoryProgress = ({ story, duration, isStoryStarted }) => {
-  const { activeStoryItem, activeStoryItemIndex, isPause, pauseStoryId } = useStory();
+const StoryProgress = ({
+  activeStoryItem,
+  activeStoryItemIndex,
+  story,
+  duration,
+  isStoryStarted,
+  isPause,
+  pauseStoryId,
+}) => {
   return (
     <div className={classes.progress}>
       {story.images.map((s, index) => {
@@ -34,9 +39,17 @@ const StoryProgress = ({ story, duration, isStoryStarted }) => {
 
 StoryProgress.propTypes = {
   duration: PropTypes.number.isRequired,
+
   isStoryStarted: PropTypes.bool.isRequired,
+  isPause: PropTypes.bool.isRequired,
+  pauseStoryId: PropTypes.string.isRequired,
+  activeStoryItemIndex: PropTypes.number.isRequired,
+
   story: PropTypes.shape({
     images: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+  activeStoryItem: PropTypes.shape({
+    id: PropTypes.string.isRequired,
   }).isRequired,
 };
 

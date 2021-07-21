@@ -3,15 +3,15 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
-import { useOffers } from '../../offers-provider';
+import * as carouselListsSelectors from '../carousel-lists/selectors';
 import { useConfig } from '../../config-provider';
 
 import classes from './CarouselCard.scss';
 
-const CarouselCard = ({ offer }) => {
-  const { enrolledOffers, viewedOffers } = useOffers();
+const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
   const { borderColor } = useConfig();
   const isOfferEnrolled = enrolledOffers.includes(offer.id);
   const isOfferViewed = viewedOffers.includes(offer.id);
@@ -69,6 +69,9 @@ CarouselCard.defaultProps = {
     rewardType: '',
     rewardValue: null,
   },
+
+  enrolledOffers: [],
+  viewedOffers: [],
 };
 
 CarouselCard.propTypes = {
@@ -83,6 +86,12 @@ CarouselCard.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   }),
+
+  enrolledOffers: PropTypes.arrayOf(PropTypes.number),
+  viewedOffers: PropTypes.arrayOf(PropTypes.number),
 };
 
-export default memo(CarouselCard);
+export default connect(state => ({
+  enrolledOffers: carouselListsSelectors.getEnrolledOffers(state),
+  viewedOffers: carouselListsSelectors.getViewedOffers(state),
+}))(memo(CarouselCard));
