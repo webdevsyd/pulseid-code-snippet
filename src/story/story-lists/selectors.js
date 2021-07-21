@@ -9,6 +9,7 @@ export const [
   getCurrentPage,
   getAttributions,
   hasRefetched,
+  hasError,
 ] = createSelectors(NAME, [
   'isFetching',
   'offers',
@@ -16,6 +17,7 @@ export const [
   'currentPage',
   'attributions',
   'hasRefetched',
+  'hasError',
 ]);
 
 export const getEnrolledOffers = state => {

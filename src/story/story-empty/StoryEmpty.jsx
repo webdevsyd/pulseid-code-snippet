@@ -1,12 +1,10 @@
 import React from 'react';
-
-import { useOffers } from '../../offers-provider';
+import PropTypes from 'prop-types';
 
 import EmptyState from './empty-state.svg';
 import classes from './StoryEmpty.scss';
 
-const StoryEmpty = () => {
-  const { onFetchOffers, onResetOffers } = useOffers();
+const StoryEmpty = ({ onFetchOffers, onResetOffers }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.bodyWrapper}>
@@ -43,6 +41,11 @@ const StoryEmpty = () => {
       </div>
     </div>
   );
+};
+
+StoryEmpty.propTypes = {
+  onFetchOffers: PropTypes.func.isRequired,
+  onResetOffers: PropTypes.func.isRequired,
 };
 
 export default StoryEmpty;

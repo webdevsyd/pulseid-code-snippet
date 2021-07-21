@@ -69,6 +69,7 @@ const StoryLists = ({
   onSetIsShowPopup,
   onSaveOfferAttribution,
   onSetIsDetailsPopupOpen,
+  onResetOffers,
 }) => {
   const swiperRef = useRef(null);
 
@@ -359,7 +360,8 @@ const StoryLists = ({
     }
   }, [hasRefetched, offers]);
 
-  if (!isFetching && offers.length === 0) return <StoryEmpty />;
+  if (!isFetching && offers.length === 0)
+    return <StoryEmpty onFetchOffers={onFetchOffers} onResetOffers={onResetOffers} />;
 
   if (isFetching) return <StoryLoader />;
 
@@ -497,6 +499,7 @@ StoryLists.propTypes = {
   onSetIsShowPopup: PropTypes.func.isRequired,
   onSaveOfferAttribution: PropTypes.func.isRequired,
   onSetIsDetailsPopupOpen: PropTypes.func.isRequired,
+  onResetOffers: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -517,5 +520,6 @@ export default connect(
     onSetIsShowPopup: storyEnrolledPopupActions.setIsShowPopup,
     onSaveOfferAttribution: storyTitleActions.saveOfferAttribution,
     onSetIsDetailsPopupOpen: storyDetailsActions.setIsDetailsPopupOpen,
+    onResetOffers: actions.resetOffers,
   }
 )(StoryLists);

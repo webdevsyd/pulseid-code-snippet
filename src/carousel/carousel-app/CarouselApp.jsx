@@ -10,12 +10,13 @@ import * as carouselListsSelectors from '../carousel-lists/selectors';
 
 import classes from './CarouselApp.scss';
 
-const CarouselApp = ({ isFetchingOffers, offers, initialize }) => {
+const CarouselApp = ({ isFetchingOffers, offers, initialize, onFetchOffers, onResetOffers }) => {
   useEffect(() => {
     initialize();
   }, []);
 
-  if (!isFetchingOffers && offers.length === 0) return <CarouselEmpty />;
+  if (!isFetchingOffers && offers.length === 0)
+    return <CarouselEmpty onFetchOffers={onFetchOffers} onResetOffers={onResetOffers} />;
 
   if (isFetchingOffers && offers.length === 0) {
     return (
@@ -32,6 +33,8 @@ CarouselApp.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isFetchingOffers: PropTypes.bool.isRequired,
   initialize: PropTypes.func.isRequired,
+  onResetOffers: PropTypes.func.isRequired,
+  onFetchOffers: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -41,5 +44,7 @@ export default connect(
   }),
   {
     initialize: carouselListsActions.initialize,
+    onResetOffers: carouselListsActions.resetOffers,
+    onFetchOffers: carouselListsActions.fetchOffers,
   }
 )(CarouselApp);

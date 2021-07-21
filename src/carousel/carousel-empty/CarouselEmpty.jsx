@@ -1,12 +1,10 @@
 import React from 'react';
-
-import { useOffers } from '../../offers-provider';
+import PropTypes from 'prop-types';
 
 import EmptyState from './empty-state.svg';
 import classes from './CarouselEmpty.scss';
 
-const CarouselEmpty = () => {
-  const { onFetchOffers, onResetOffers } = useOffers();
+const CarouselEmpty = ({ onFetchOffers, onResetOffers }) => {
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>Offer Carousel Isn&lsquo;t Available Right Nows</h1>
@@ -27,6 +25,11 @@ const CarouselEmpty = () => {
       <EmptyState className={classes.emptyState} />
     </div>
   );
+};
+
+CarouselEmpty.propTypes = {
+  onFetchOffers: PropTypes.func.isRequired,
+  onResetOffers: PropTypes.func.isRequired,
 };
 
 export default CarouselEmpty;

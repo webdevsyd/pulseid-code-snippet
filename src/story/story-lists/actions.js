@@ -17,6 +17,7 @@ export const [
   setCurrentPage,
   setAttributions,
   setHasRefetched,
+  setHasError,
 ] = createSetterActions(NAME, [
   'isFetching',
   'offers',
@@ -24,6 +25,7 @@ export const [
   'currentPage',
   'attributions',
   'hasRefetched',
+  'hasError',
 ]);
 
 export const reset = createAction(`${NAME}/RESET`);
@@ -59,6 +61,7 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
     dispatch(setTotal(totalCount));
     dispatch(setCurrentPage(page));
   } catch (err) {
+    dispatch(setHasError(true));
     throw new Error(err);
   }
 };
@@ -79,8 +82,14 @@ export const fetchOffersAttribution = () => async (dispatch, getState) => {
 
     dispatch(setAttributions(attributions));
   } catch (err) {
+    dispatch(setHasError(true));
     throw new Error(err);
   }
+};
+
+export const resetOffers = () => dispatch => {
+  dispatch(setOffers([]));
+  dispatch(setHasError(false));
 };
 
 export const initialize = () => async dispatch => {

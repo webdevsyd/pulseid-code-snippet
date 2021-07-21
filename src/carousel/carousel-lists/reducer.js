@@ -9,6 +9,7 @@ const initialState = {
   currentPage: 0,
   isFetchingOffers: false,
   isFetchingAttributions: false,
+  hasError: false,
 };
 
 export default createReducer(initialState, {
@@ -18,5 +19,6 @@ export default createReducer(initialState, {
   [actions.setCurrentPage]: createSetter('currentPage'),
   [actions.setIsFetchingOffers]: createSetter('isFetchingOffers'),
   [actions.setIsFetchingAttributions]: createSetter('isFetchingAttributions'),
+  [actions.setHasError]: createSetter('hasError'),
   [actions.reset]: () => initialState,
 });
