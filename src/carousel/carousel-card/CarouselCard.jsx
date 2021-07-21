@@ -18,9 +18,11 @@ const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
   return (
     <div
       onClick={() => {
-        if (typeof PulseiD !== 'undefined') {
+        if (typeof PulseiD !== 'undefined' && /Android/.test(navigator.userAgent)) {
           // eslint-disable-next-line no-undef
           PulseiD.onClickOffer(offer.id);
+        } else if (/iPhone|iPad/.test(navigator.userAgent)) {
+          window.webkit.messageHandlers.PulseId.postMessage({ offer_id: offer.id });
         }
       }}
       className={classes.card}
