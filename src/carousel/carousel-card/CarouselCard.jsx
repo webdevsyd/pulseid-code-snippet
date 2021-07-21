@@ -22,6 +22,9 @@ const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
           // eslint-disable-next-line no-undef
           PulseiD.onClickOffer(offer.id);
         } else {
+          // If this error `Uncaught TypeError: Cannot read property 'messageHandlers' of undefined`
+          // display in the console log in chrome while running it locally, just disregard it since
+          // this function will only trigger IOS Device
           window.webkit.messageHandlers.PulseId.postMessage({ offer_id: offer.id });
         }
       }}
