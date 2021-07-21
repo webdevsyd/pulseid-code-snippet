@@ -6,7 +6,7 @@ import * as authentication from '../../authentication';
 
 import DEFAULT_IMAGE from './default-image.png';
 import * as selectors from './selectors';
-import { NAME, DEFAULT_LIMIT } from './constants';
+import { NAME } from './constants';
 
 const imageObject = image => ({ id: uuidv4(), src: `${image}?random=${uuidv4()}` });
 
@@ -42,7 +42,6 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
   try {
     const params = {
       page,
-      limit: DEFAULT_LIMIT,
       xApiKey: authentication.getApiKey(state),
       xApiSecret: authentication.getApiSecret(state),
     };
