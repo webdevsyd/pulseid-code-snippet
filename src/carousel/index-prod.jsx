@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 // eslint-disable-next-line import/no-unresolved
 import '../index.css?raw';
 // eslint-disable-next-line import/no-unresolved
 import '../fonts/fonts.css?raw';
+import store from '../app/store';
 
 import App from './App';
 
@@ -23,7 +25,9 @@ export default {
   },
   render: () => {
     ReactDOM.render(
-      <App xApiKey={init.xApiKey} xApiSecret={init.xApiSecret} externalUserId={init.euid} />,
+      <Provider store={store}>
+        <App xApiKey={init.xApiKey} xApiSecret={init.xApiSecret} externalUserId={init.euid} />
+      </Provider>,
       document.querySelector(init.selector)
     );
   },
