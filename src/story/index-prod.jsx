@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import icons from '@pulse/ui-lib/src/components/icons';
 import { Provider } from 'react-redux';
 
 // eslint-disable-next-line import/no-unresolved
@@ -24,6 +25,8 @@ export default {
     init = config;
   },
   render: () => {
+    icons.setup();
+
     ReactDOM.render(
       <Provider store={store}>
         <App apiKey={init.xApiKey} apiSecret={init.xApiSecret} externalUserId={init.euid} />
