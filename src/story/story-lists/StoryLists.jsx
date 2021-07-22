@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/swiper.min.css?raw';
 import ColorThief from 'colorthief';
+import queryString from 'query-string';
 
 import StoryEmpty from '../story-empty';
 import StoryLoader from '../story-loader';
@@ -349,7 +350,8 @@ const StoryLists = ({
 
   useEffect(() => {
     (async () => {
-      await initialize();
+      const urlParams = queryString.parse(window.location.search);
+      await initialize(urlParams.offer_id);
     })();
   }, []);
 
@@ -365,11 +367,15 @@ const StoryLists = ({
 
   if (isFetching) return <StoryLoader />;
 
+  const showLoadingPlaceholder = activeStoryIndex === offers.length - 1 && total !== offers.length;
+
+  // touchRatio: when set to 0 This will disable swiping when the loading placeholder is display
   return (
     <>
       <Swiper
         className={classes.swiperWrapper}
         ref={swiperRef}
+        touchRatio={showLoadingPlaceholder ? 0 : 1}
         onSlideResetTransitionEnd={swiper => handleSlideResetTransitionEnd(swiper)}
         onSlidePrevTransitionEnd={handleSlidePrevTransitionEnd}
         onSlideNextTransitionEnd={handleSlideNextTransitionEnd}
@@ -418,7 +424,7 @@ const StoryLists = ({
               </SwiperSlide>
             );
           })}
-        {activeStoryIndex === offers.length - 1 && total !== offers.length && (
+        {showLoadingPlaceholder && (
           <SwiperSlide>
             <StoryLoader />
           </SwiperSlide>

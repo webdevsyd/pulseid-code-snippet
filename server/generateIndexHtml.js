@@ -42,17 +42,18 @@ const addEnvVars = document => {
   ].join('');
 };
 
-// `alert(window.pulseConfig.backgroundColor); `,
-
 const initializeApp = ({ document, apiKey, apiSecret, euid }) => {
   document.querySelector('[data-aid="js-app"]').textContent = [
-    `CodeSnippet.config({
-      xApiKey: '${apiKey}',
-      xApiSecret: '${apiSecret}',
-      euid: '${euid}',
-      selector: '#app',
-    }); `,
-    `CodeSnippet.render();`,
+    `function renderApp({ config }) {
+      console.log(config);
+      CodeSnippet.config({
+        xApiKey: '${apiKey}',
+        xApiSecret: '${apiSecret}',
+        euid: '${euid}',
+        selector: '#app',
+      });
+      CodeSnippet.render();`,
+    `}`,
   ].join('');
 };
 

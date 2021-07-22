@@ -19,7 +19,7 @@ router.get(
         url: `${externalOfferApiUrl}/offer?${queryString({
           limit,
           page,
-          offerId,
+          offerId: offerId || undefined,
         })}`,
         headers: {
           'X-Api-Key': req.headers['x-api-key'],

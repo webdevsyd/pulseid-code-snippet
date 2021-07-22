@@ -42,8 +42,8 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
   try {
     const params = {
       page,
-      xApiKey: authentication.getApiKey(state),
-      xApiSecret: authentication.getApiSecret(state),
+      apiKey: authentication.getApiKey(state),
+      apiSecret: authentication.getApiSecret(state),
     };
 
     const {
@@ -75,8 +75,8 @@ export const fetchOffersAttribution = () => async (dispatch, getState) => {
 
   try {
     const params = {
-      xApiKey: authentication.getApiKey(state),
-      xApiSecret: authentication.getApiSecret(state),
+      apiKey: authentication.getApiKey(state),
+      apiSecret: authentication.getApiSecret(state),
       externalUserId: authentication.getExternalUserId(state),
     };
 
