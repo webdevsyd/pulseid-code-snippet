@@ -5,22 +5,33 @@ import HorizontalScroll from '@pulse/ui-lib/src/components/horizontal-infinite-s
 
 import CarouselCard from '../carousel-card/CarouselCard';
 import CarouselLoader from '../carousel-loader/CarouselLoader';
+import * as config from '../../config';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
 import classes from './CarouselLists.scss';
 
-const CarouselLists = ({ isFetchingOffers, offers, currentPage, onFetchOffers }) => {
+const CarouselLists = ({
+  isFetchingOffers,
+  offers,
+  currentPage,
+  configTitle,
+  configSubTitle,
+  onFetchOffers,
+  onSetIsFetchingOffers,
+}) => {
   return (
     <>
-      {/* <span className={classes.title}>YOUR OFFERS</span>
-      <span className={classes.subTitle}>Because of your recent Wellness purchase</span> */}
+      {configTitle && <span className={classes.title}>{configTitle}</span>}
+      {configSubTitle && <span className={classes.subTitle}>{configSubTitle}</span>}
       <HorizontalScroll
         className={classes.wrapper}
         offsetRight={100}
-        onReachRight={() => {
+        onReachRight={async () => {
           if (!isFetchingOffers) {
-            onFetchOffers({ page: currentPage + 1 });
+            onSetIsFetchingOffers(true);
+            await onFetchOffers({ page: currentPage + 1 });
+            onSetIsFetchingOffers(false);
           }
         }}
       >
@@ -38,7 +49,11 @@ CarouselLists.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   currentPage: PropTypes.number.isRequired,
 
+  configTitle: PropTypes.string.isRequired,
+  configSubTitle: PropTypes.string.isRequired,
+
   onFetchOffers: PropTypes.func.isRequired,
+  onSetIsFetchingOffers: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -46,8 +61,11 @@ export default connect(
     isFetchingOffers: selectors.isFetchingOffers(state),
     offers: selectors.getOffers(state),
     currentPage: selectors.getCurrentPage(state),
+    configTitle: config.getTitle(state),
+    configSubTitle: config.getSubTitle(state),
   }),
   {
     onFetchOffers: actions.fetchOffers,
+    onSetIsFetchingOffers: actions.setIsFetchingOffers,
   }
 )(CarouselLists);

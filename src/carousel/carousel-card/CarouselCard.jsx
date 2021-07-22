@@ -6,11 +6,18 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
+import * as config from '../../config';
 import * as carouselListsSelectors from '../carousel-lists/selectors';
 
 import classes from './CarouselCard.scss';
 
-const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
+const CarouselCard = ({
+  offer,
+  enrolledOffers,
+  viewedOffers,
+  configBackgroundColor,
+  configBorderColor,
+}) => {
   const isOfferEnrolled = enrolledOffers.includes(offer.id);
   const isOfferViewed = viewedOffers.includes(offer.id);
   return (
@@ -47,6 +54,7 @@ const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
             isOfferEnrolled && classes.enrolled,
             isOfferViewed && classes.viewed
           )}
+          style={{ borderColor: configBorderColor }}
         >
           <img
             src={offer.merchant.image}
@@ -55,7 +63,10 @@ const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
             className={classes.image}
           />
           {isOfferEnrolled && (
-            <div className={classes.iconContainer}>
+            <div
+              className={classes.iconContainer}
+              style={{ backgroundColor: configBackgroundColor }}
+            >
               <Icon icon={['fas', 'check']} />
             </div>
           )}
@@ -91,9 +102,14 @@ CarouselCard.propTypes = {
 
   enrolledOffers: PropTypes.arrayOf(PropTypes.number),
   viewedOffers: PropTypes.arrayOf(PropTypes.number),
+
+  configBackgroundColor: PropTypes.string.isRequired,
+  configBorderColor: PropTypes.string.isRequired,
 };
 
 export default connect(state => ({
   enrolledOffers: carouselListsSelectors.getEnrolledOffers(state),
   viewedOffers: carouselListsSelectors.getViewedOffers(state),
+  configBackgroundColor: config.getConfigBackgroundColor(state),
+  configBorderColor: config.getConfigBorderColor(state),
 }))(memo(CarouselCard));

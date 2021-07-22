@@ -16,7 +16,8 @@ export const [
   setOffers,
   setTotal,
   setCurrentPage,
-  setAttributions,
+  setViewedOffers,
+  setEnrolledOffers,
   setHasError,
 ] = createSetterActions(NAME, [
   'isFetchingOffers',
@@ -24,7 +25,8 @@ export const [
   'offers',
   'total',
   'currentPage',
-  'attributions',
+  'viewedOffers',
+  'enrolledOffers',
   'hasError',
 ]);
 
@@ -36,8 +38,6 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
   const currentOffers = selectors.getOffers(state);
 
   if (total === currentOffers.length && currentOffers.length > 0) return;
-
-  dispatch(setIsFetchingOffers(true));
 
   try {
     const params = {
@@ -64,8 +64,6 @@ export const fetchOffers = ({ page = 0 } = {}) => async (dispatch, getState) => 
   } catch (err) {
     console.log(err);
     throw new Error(err);
-  } finally {
-    dispatch(setIsFetchingOffers(false));
   }
 };
 
@@ -84,7 +82,10 @@ export const fetchOffersAttribution = () => async (dispatch, getState) => {
       data: { attributions },
     } = await api.getOfferAttributions(params);
 
-    dispatch(setAttributions(attributions));
+    if (attributions) {
+      dispatch(setEnrolledOffers(attributions.filter(a => a.enroll).map(a => a.offerId)));
+      dispatch(setViewedOffers(attributions.filter(a => a.view).map(a => a.offerId)));
+    }
   } catch (err) {
     console.log(err);
     throw new Error(err);
@@ -98,9 +99,16 @@ export const resetOffers = () => dispatch => {
   dispatch(setHasError(false));
 };
 
-export const initialize = ({ page = 0 } = {}) => dispatch => {
-  dispatch(fetchOffers({ page }));
-  dispatch(fetchOffersAttribution());
+export const initialize = ({ page = 0 } = {}) => async dispatch => {
+  try {
+    dispatch(setIsFetchingOffers(true));
+    await dispatch(fetchOffersAttribution());
+    await dispatch(fetchOffers({ page }));
+  } catch (err) {
+    throw new Error(err);
+  } finally {
+    dispatch(setIsFetchingOffers(false));
+  }
 };
 
 export default {};
