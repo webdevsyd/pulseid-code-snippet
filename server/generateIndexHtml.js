@@ -51,6 +51,7 @@ const initializeApp = ({ document, apiKey, apiSecret, euid }) => {
         xApiSecret: '${apiSecret}',
         euid: '${euid}',
         selector: '#app',
+        config: config,
       });
       CodeSnippet.render();`,
     `}`,

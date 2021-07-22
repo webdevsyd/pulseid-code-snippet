@@ -4,16 +4,12 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
-import { useConfig } from '../../config-provider';
-
 import * as actions from './actions';
 import * as selectors from './selectors';
 import EnrollIcon from './icon-enroll.svg';
 import classes from './StoryTitle.scss';
 
 const StoryTitle = ({ enrolledOffers, story, isSaving, onClickEnroll, onSetIsSaving }) => {
-  const { backgroundColor } = useConfig();
-
   const isOfferEnrolled = enrolledOffers.includes(story.id);
 
   const handleEnroll = async () => {
@@ -44,7 +40,6 @@ const StoryTitle = ({ enrolledOffers, story, isSaving, onClickEnroll, onSetIsSav
         type="button"
         disabled={isSaving || isOfferEnrolled}
         className={clsx(classes.enrollButton, isOfferEnrolled && classes.enrolled)}
-        style={{ backgroundColor }}
         onClick={() => handleEnroll(story.id)}
       >
         {isSaving ? (

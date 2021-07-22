@@ -27,6 +27,12 @@ ReactDOM.render(
       apiKey={process.env.X_API_KEY}
       apiSecret={process.env.X_API_SECRET}
       externalUserId={process.env.EXTERNAL_USER_ID}
+      config={{
+        backgroundColor: '#ff9800',
+        borderColor: '#ff9800',
+        title: 'Your Offers',
+        subTitle: 'Lorem Ipsum sit dolora met',
+      }}
     />
   </Provider>,
   document.getElementById('app')

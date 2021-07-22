@@ -5,20 +5,16 @@ import HorizontalScroll from '@pulse/ui-lib/src/components/horizontal-infinite-s
 
 import CarouselCard from '../carousel-card/CarouselCard';
 import CarouselLoader from '../carousel-loader/CarouselLoader';
-import { useConfig } from '../../config-provider';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
 import classes from './CarouselLists.scss';
 
 const CarouselLists = ({ isFetchingOffers, offers, currentPage, onFetchOffers }) => {
-  const { title, subTitle } = useConfig();
   return (
     <>
-      {title !== '' && <span className={classes.title}>YOUR OFFERS</span>}
-      {subTitle !== '' && (
-        <span className={classes.subTitle}>Because of your recent Wellness purchase</span>
-      )}
+      {/* <span className={classes.title}>YOUR OFFERS</span>
+      <span className={classes.subTitle}>Because of your recent Wellness purchase</span> */}
       <HorizontalScroll
         className={classes.wrapper}
         offsetRight={100}

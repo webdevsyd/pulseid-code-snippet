@@ -29,7 +29,12 @@ export default {
 
     ReactDOM.render(
       <Provider store={store}>
-        <App apiKey={init.xApiKey} apiSecret={init.xApiSecret} externalUserId={init.euid} />
+        <App
+          apiKey={init.xApiKey}
+          apiSecret={init.xApiSecret}
+          externalUserId={init.euid}
+          config={init.config}
+        />
       </Provider>,
       document.querySelector(init.selector)
     );

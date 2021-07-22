@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import * as config from '../../config';
 import * as authentication from '../../authentication';
 import * as carouseLists from '../../carousel/carousel-lists';
 import * as storyApp from '../../story/story-app';
@@ -9,6 +10,7 @@ import * as storyTitle from '../../story/story-title';
 import * as storyDetails from '../../story/story-details';
 
 const rootReducer = combineReducers({
+  [config.NAME]: config.reducer,
   [authentication.NAME]: authentication.reducer,
   [carouseLists.NAME]: carouseLists.reducer,
   [storyApp.NAME]: storyApp.reducer,

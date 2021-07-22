@@ -7,12 +7,10 @@ import { connect } from 'react-redux';
 import Icon from '@pulse/ui-lib/src/components/icons/Icon';
 
 import * as carouselListsSelectors from '../carousel-lists/selectors';
-import { useConfig } from '../../config-provider';
 
 import classes from './CarouselCard.scss';
 
 const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
-  const { borderColor } = useConfig();
   const isOfferEnrolled = enrolledOffers.includes(offer.id);
   const isOfferViewed = viewedOffers.includes(offer.id);
   return (
@@ -49,7 +47,6 @@ const CarouselCard = ({ offer, enrolledOffers, viewedOffers }) => {
             isOfferEnrolled && classes.enrolled,
             isOfferViewed && classes.viewed
           )}
-          style={{ borderColor }}
         >
           <img
             src={offer.merchant.image}
