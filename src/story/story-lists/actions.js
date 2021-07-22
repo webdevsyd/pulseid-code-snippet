@@ -41,7 +41,7 @@ export const getOfferLists = async ({ page, offerId, apiKey, apiSecret }) => {
     images:
       o.images.length > 0
         ? [...o.images.map(image => imageObject(image))]
-        : [imageObject(DEFAULT_IMAGE)],
+        : [imageObject(DEFAULT_IMAGE), imageObject(DEFAULT_IMAGE), imageObject(DEFAULT_IMAGE)],
   }));
 
   return {

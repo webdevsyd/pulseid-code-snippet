@@ -7,6 +7,7 @@ import StoryLists from '../story-lists';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { DURATION_IN_SEC } from './constants';
 
 const StoryApp = ({
   isPause,
@@ -48,6 +49,7 @@ const StoryApp = ({
 
   return (
     <StoryLists
+      durationInSeconds={DURATION_IN_SEC}
       isPause={isPause}
       isStoryStarted={isStoryStarted}
       isSwiping={isSwiping}

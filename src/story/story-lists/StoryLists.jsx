@@ -22,7 +22,6 @@ import StoryEnrolledPopup from '../story-enrolled-popup';
 import * as storyEnrolledPopupActions from '../story-enrolled-popup/actions';
 import * as storyEnrolledPopupSelectors from '../story-enrolled-popup/selectors';
 
-import { DURATION_IN_SEC } from './constants';
 import * as selectors from './selectors';
 import * as actions from './actions';
 import classes from './StoryLists.scss';
@@ -50,6 +49,7 @@ const StoryLists = ({
   total,
   currentPage,
   enrolledOffers,
+  durationInSeconds,
 
   onSetActiveStory,
   onSetActiveStoryIndex,
@@ -167,7 +167,7 @@ const StoryLists = ({
             handleNextStoryImage(); // Next Item in the Story
           });
         });
-      } else if (activeStoryItemIndex === activeStory.images.length - 1 && offers.length < total) {
+      } else {
         console.log('next story from timer');
         swiperRef.current.swiper.slideNext();
       }
@@ -395,7 +395,7 @@ const StoryLists = ({
                     <StoryProgress
                       isStoryStarted={isStoryStarted}
                       isPause={isPause}
-                      duration={DURATION_IN_SEC}
+                      duration={durationInSeconds}
                       activeStoryItem={activeStoryItem}
                       activeStoryItemIndex={activeStoryItemIndex}
                       pauseStoryId={pauseStoryId}
@@ -485,6 +485,7 @@ StoryLists.propTypes = {
   startTime: PropTypes.number,
   total: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
+  durationInSeconds: PropTypes.number.isRequired,
 
   onSetActiveStory: PropTypes.func.isRequired,
   onSetActiveStoryIndex: PropTypes.func.isRequired,
