@@ -16,7 +16,8 @@ export const [
   setOffers,
   setTotal,
   setCurrentPage,
-  setAttributions,
+  setViewedOffers,
+  setEnrolledOffers,
   setHasRefetched,
   setHasError,
 ] = createSetterActions(NAME, [
@@ -24,7 +25,8 @@ export const [
   'offers',
   'total',
   'currentPage',
-  'attributions',
+  'viewedOffers',
+  'enrolledOffers',
   'hasRefetched',
   'hasError',
 ]);
@@ -89,7 +91,10 @@ export const fetchOffersAttribution = () => async (dispatch, getState) => {
       data: { attributions },
     } = await api.getOfferAttributions(params);
 
-    dispatch(setAttributions(attributions));
+    if (attributions) {
+      dispatch(setEnrolledOffers(attributions.filter(a => a.enroll).map(a => a.offerId)));
+      dispatch(setViewedOffers(attributions.filter(a => a.view).map(a => a.offerId)));
+    }
   } catch (err) {
     dispatch(setHasError(true));
     throw new Error(err);

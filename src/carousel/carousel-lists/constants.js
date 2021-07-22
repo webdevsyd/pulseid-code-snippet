@@ -1,4 +1,4 @@
-export const NAME = 'offer/lists';
+export const NAME = 'carousel/lists';
 
 export const DEFAULT_PAGE = 0;
 

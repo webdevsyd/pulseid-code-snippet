@@ -7,7 +7,8 @@ export const [
   getOffers,
   getTotal,
   getCurrentPage,
-  getAttributions,
+  getViewedOffers,
+  getEnrolledOffers,
   hasRefetched,
   hasError,
 ] = createSelectors(NAME, [
@@ -15,21 +16,10 @@ export const [
   'offers',
   'total',
   'currentPage',
-  'attributions',
+  'viewedOffers',
+  'enrolledOffers',
   'hasRefetched',
   'hasError',
 ]);
-
-export const getEnrolledOffers = state => {
-  return getOffers(state)
-    .filter(a => a.enroll)
-    .map(a => a.offerId);
-};
-
-export const getViewedOffers = state => {
-  return getOffers(state)
-    .filter(a => a.view)
-    .map(a => a.offerId);
-};
 
 export default {};

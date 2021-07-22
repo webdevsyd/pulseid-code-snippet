@@ -69,6 +69,7 @@ const StoryLists = ({
   onSetHasRefetched,
   onSetIsShowPopup,
   onSaveOfferAttribution,
+  onSetEnrolledOffers,
   onSetIsDetailsPopupOpen,
   onResetOffers,
 }) => {
@@ -300,7 +301,7 @@ const StoryLists = ({
 
     try {
       await onSaveOfferAttribution({ offerId: id, action: 'ENROLL' });
-
+      onSetEnrolledOffers([...enrolledOffers, id]);
       onSetIsShowPopup(true);
 
       setTimeout(() => {
@@ -505,6 +506,7 @@ StoryLists.propTypes = {
   onSetHasRefetched: PropTypes.func.isRequired,
   onSetIsShowPopup: PropTypes.func.isRequired,
   onSaveOfferAttribution: PropTypes.func.isRequired,
+  onSetEnrolledOffers: PropTypes.func.isRequired,
   onSetIsDetailsPopupOpen: PropTypes.func.isRequired,
   onResetOffers: PropTypes.func.isRequired,
 };
@@ -526,6 +528,7 @@ export default connect(
     onSetHasRefetched: actions.setHasRefetched,
     onSetIsShowPopup: storyEnrolledPopupActions.setIsShowPopup,
     onSaveOfferAttribution: storyTitleActions.saveOfferAttribution,
+    onSetEnrolledOffers: actions.setEnrolledOffers,
     onSetIsDetailsPopupOpen: storyDetailsActions.setIsDetailsPopupOpen,
     onResetOffers: actions.resetOffers,
   }
